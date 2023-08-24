@@ -1,0 +1,70 @@
+on: pull_request
+name: Review
+jobs:
+    test-composer-files:
+        name: Validate composer
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+        steps:
+            - uses: actions/checkout@master
+            - run: docker network create frontend
+            - run: docker compose up --detach
+            - name: Validate composer
+              run: docker compose run --rm phpfpm composer validate
+
+    coding-standards-check_php-cs-fixer:
+        name: coding-standards-check/php-cs-fixer
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+        steps:
+            - uses: actions/checkout@master
+            - run: docker network create frontend
+            - run: docker compose up --detach
+            - run: docker compose exec --user root phpfpm composer install
+            - name: coding-standards-check/php-cs-fixer
+              run: docker compose exec --user root phpfpm composer coding-standards-check/php-cs-fixer
+
+    coding-standards-check_twigcs:
+        name: coding-standards-check/twigcs
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+        steps:
+            - uses: actions/checkout@master
+            - run: docker network create frontend
+            - run: docker compose up --detach
+            - run: docker compose exec --user root phpfpm composer install
+            - name: coding-standards-check/twigcs
+              run: docker compose exec --user root phpfpm composer coding-standards-check/twigcs
+
+    coding-standards-check_markdownlint:
+        name: coding-standards-check/markdownlint
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@master
+            - run: docker network create frontend
+            - run: docker compose run --rm node yarn install
+            - name: coding-standards-check/markdownlint
+              run: docker compose run --rm node yarn coding-standards-check/scss
+
+    coding-standards-check_scss:
+        name: coding-standards-check/scss
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@master
+            - run: docker network create frontend
+            - run: docker compose run --rm node yarn install
+            - name: coding-standards-check/scss
+              run: docker compose run --rm node yarn coding-standards-check/scss
+
+    build-assets:
+        name: build assets
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@master
+            - run: docker network create frontend
+            - run: docker compose run --rm node yarn install
+            - name: build assets
+              run: docker compose run --rm node yarn build
