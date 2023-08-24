@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ 'Presence'|trans }} – {{ title }}</title>
+    {{ encore_entry_link_tags('app') }}
+  </head>
+  <body>
+<table>
+  <thead>
+  <tr>
+    <td>
+      {{ 'Presence'|trans }}
+      <h1>{{ title }}</h1>
+    </td>
+    <td colspan="{{ dates|length }}">
+      <div class="header">
+        <div class="month">
+          {{ dates|first|date('F') }}
+        </div>
+        <div class="legend">
+          <span class="blob workingelsewhere"></span> {{ 'Working elsewhere'|trans }}
+          <span class="blob oof"></span> {{ 'Out of office'|trans }}
+        </div>
+        <div class="logo">
+          <img src="{{ logo_url }}" alt="{{ title }}"/>
+        </div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    {{ 'Week'|trans }}
+    <h2>{{ dates|first|date('W') }}</h2>
+    </td>
+    {% for date in dates %}
+      <th>
+        {{ date|date('j') }}<br/>{{ date|date('l') }}
+      </th>
+    {% endfor %}
+  </tr>
+  </thead>
+  <tbody>
+  {% for name, items in people %}
+    <tr>
+      <th>{{ name }}</th>
+      {% for date in dates %}
+        {% apply spaceless %}
+        <td>
+          {% if items[date] is defined %}
+            {% for item in items[date] %}
+              <div class="blob {{ item.type|lower }}" style="width: {{ 100 * item.duration }}%; margin-left: {{ 100 * (item.offset|default(0)) }}%" {% if item.title is defined %}title="{{ item.title }}{% endif %}">
+              </div>
+            {% endfor %}
+          {% endif %}
+        </td>
+        {% endapply %}
+      {% endfor %}
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+  </body>
+</html>
