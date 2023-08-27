@@ -1,0 +1,20 @@
+<!doctype html>
+{% set title = 'Calendars'|trans %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ 'Presence'|trans }} – {{ title }}</title>
+    {{ encore_entry_link_tags('app') }}
+  </head>
+  <body>
+  <div class="container-fluid">
+      <h1>{{ title }}</h1>
+
+      <div class="list-group">
+          {% for calendar in calendars %}
+              <a href="{{ path('calendar_show', {id: calendar.id}) }}" class="list-group-item list-group-item-action">{{  calendar.name }}</a>
+          {% endfor %}
+      </div>
+  </body>
+</html>

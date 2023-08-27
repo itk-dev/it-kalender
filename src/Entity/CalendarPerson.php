@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CalendarPersonRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\PositiveOrZero;
 
 #[ORM\Entity(repositoryClass: CalendarPersonRepository::class)]
 class CalendarPerson
@@ -22,7 +23,13 @@ class CalendarPerson
     private ?Person $person = null;
 
     #[ORM\Column]
-    private ?int $position = null;
+    #[PositiveOrZero]
+    private int $position = 0;
+
+    public function __toString(): string
+    {
+        return $this->person?->getName() ?? self::class;
+    }
 
     public function getId(): ?int
     {
@@ -53,7 +60,7 @@ class CalendarPerson
         return $this;
     }
 
-    public function getPosition(): ?int
+    public function getPosition(): int
     {
         return $this->position;
     }

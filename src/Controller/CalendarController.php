@@ -2,20 +2,32 @@
 
 namespace App\Controller;
 
+use App\Entity\Calendar;
 use App\ICS\BusyStatus;
+use App\Repository\CalendarRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DefaultController extends AbstractController
+class CalendarController extends AbstractController
 {
-    #[Route('/', name: 'app_default')]
-    public function index(): Response
+    #[Route('/', name: 'calendar_index')]
+    public function index(CalendarRepository $repository): Response
+    {
+        $calendars = $repository->findAll();
+
+        return $this->render('calendar/index.html.twig', [
+            'calendars' => $calendars,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'calendar_show')]
+    public function show(Calendar $calendar): Response
     {
         $parameters = json_decode($this->data()->getContent(), true);
 
-        return $this->render('default/index.html.twig', $parameters);
+        return $this->render('calendar/show.html.twig', $parameters);
     }
 
     #[Route('/data', name: 'app_data')]
