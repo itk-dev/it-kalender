@@ -27,7 +27,7 @@ class Event
     {
         return $this->event->dtend
             ? new \DateTimeImmutable($this->event->dtend)
-            : new \DateTimeImmutable($this->getStartTime()->format(\DateTimeImmutable::ATOM). ' tomorrow');
+            : new \DateTimeImmutable($this->getStartTime()->format(\DateTimeImmutable::ATOM).' tomorrow');
     }
 
     public function getBusyStatus(): BusyStatus
