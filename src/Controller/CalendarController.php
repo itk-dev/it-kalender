@@ -22,7 +22,7 @@ class CalendarController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'calendar_show')]
+    #[Route('/{slug}', name: 'calendar_show')]
     public function show(Calendar $calendar): Response
     {
         $parameters = json_decode($this->data()->getContent(), true);

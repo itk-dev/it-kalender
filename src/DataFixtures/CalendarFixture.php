@@ -13,7 +13,8 @@ class CalendarFixture extends Fixture
         for ($i = 0; $i < 4; ++$i) {
             $calendar = new Calendar();
             $calendar
-                ->setName(sprintf('Calendar %d', $i));
+                ->setName(sprintf('Calendar %d', $i))
+                ->setSlug(sprintf('calendar-%02d', $i));
             $this->setReference(sprintf('calendar:calendar%02d', $i), $calendar);
             $manager->persist($calendar);
         }

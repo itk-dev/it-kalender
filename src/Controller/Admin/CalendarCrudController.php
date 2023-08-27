@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\Translation\TranslatableMessage;
 
 class CalendarCrudController extends AbstractCrudController
 {
@@ -21,14 +22,15 @@ class CalendarCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        yield TextField::new('name');
-        yield CollectionField::new('calendarPeople')
+        yield TextField::new('name', new TranslatableMessage('Name'));
+        yield TextField::new('slug', new TranslatableMessage('Slug'));
+        yield CollectionField::new('calendarPeople', new TranslatableMessage('People'))
             ->renderExpanded()
             ->setEntryIsComplex()
             ->setEntryType(CalendarPersonType::class);
-        yield DateTimeField::new('createdAt')
+        yield DateTimeField::new('createdAt', new TranslatableMessage('Created at'))
             ->hideOnForm();
-        yield DateTimeField::new('updatedAt')
+        yield DateTimeField::new('updatedAt', new TranslatableMessage('Updated at'))
             ->hideOnForm();
     }
 
@@ -47,10 +49,10 @@ class CalendarCrudController extends AbstractCrudController
                 Action::new('show', 'Show')
                     ->linkToUrl(fn (Calendar $calendar) => $this->generateUrl(
                         'calendar_show', [
-                            'id' => $calendar->getId()
+                            'slug' => $calendar->getSlug(),
                         ]
                     )
-                )
+                    )
             );
     }
 }

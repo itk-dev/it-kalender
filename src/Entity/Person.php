@@ -69,33 +69,11 @@ class Person
         return $this;
     }
 
-    /**
-     * @return Collection<int, CalendarPerson>
-     */
-    public function getCalendarPeople(): Collection
+    public function getCalendars(): array
     {
-        return $this->calendarPeople;
-    }
-
-    public function addCalendarPerson(CalendarPerson $calendarPerson): static
-    {
-        if (!$this->calendarPeople->contains($calendarPerson)) {
-            $this->calendarPeople->add($calendarPerson);
-            $calendarPerson->setPerson($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCalendarPerson(CalendarPerson $calendarPerson): static
-    {
-        if ($this->calendarPeople->removeElement($calendarPerson)) {
-            // set the owning side to null (unless already changed)
-            if ($calendarPerson->getPerson() === $this) {
-                $calendarPerson->setPerson(null);
-            }
-        }
-
-        return $this;
+        return array_map(
+            static fn (CalendarPerson $calendarPerson) => $calendarPerson->getCalendar(),
+            $this->calendarPeople->toArray()
+        );
     }
 }

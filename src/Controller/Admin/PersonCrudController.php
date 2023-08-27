@@ -7,9 +7,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
+use Symfony\Component\Translation\TranslatableMessage;
 
 class PersonCrudController extends AbstractCrudController
 {
@@ -20,11 +22,13 @@ class PersonCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        yield TextField::new('name');
-        yield UrlField::new('icsUrl');
-        yield DateTimeField::new('createdAt')
+        yield TextField::new('name', new TranslatableMessage('Name'));
+        yield UrlField::new('icsUrl', new TranslatableMessage('ICS URL'));
+        yield CollectionField::new('calendars', new TranslatableMessage('Calendars'));
+
+        yield DateTimeField::new('createdAt', new TranslatableMessage('Created at'))
             ->hideOnForm();
-        yield DateTimeField::new('updatedAt')
+        yield DateTimeField::new('updatedAt', new TranslatableMessage('Updated at'))
             ->hideOnForm();
     }
 
@@ -37,7 +41,6 @@ class PersonCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-            ->add(Crud::PAGE_INDEX, Action::DETAIL)
             ->disable(Action::DELETE);
     }
 }

@@ -9,10 +9,13 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Uid\Uuid;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CalendarRepository::class)]
+#[UniqueEntity(fields: ['slug'])]
+#[ORM\HasLifecycleCallbacks]
 class Calendar
 {
     use TimestampableEntity;
@@ -24,12 +27,17 @@ class Calendar
     private ?Uuid $id = null;
 
     #[ORM\Column(length: 255)]
-    #[NotBlank]
+    #[Assert\NotBlank]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'calendar', targetEntity: CalendarPerson::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
     #[ORM\OrderBy(['position' => Criteria::ASC])]
+    #[Assert\Valid]
     private Collection $calendarPeople;
+
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank]
+    private ?string $slug = null;
 
     public function __construct()
     {
@@ -86,5 +94,28 @@ class Calendar
         }
 
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function setPeoplePositions()
+    {
+        $position = 0;
+        foreach ($this->getCalendarPeople() as $calendarPerson) {
+            $calendarPerson->setPosition($position);
+            ++$position;
+        }
     }
 }
