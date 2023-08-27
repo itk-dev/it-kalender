@@ -10,7 +10,11 @@ final class ICSHelper
 {
     private $options;
 
-    private const MICROSOFT_TRUE = 'TRUE';
+    public const MICROSOFT_TRUE = 'TRUE';
+    public const MICROSOFT_FALSE = 'FALSE';
+    public const MICROSOFT_ALLDAYEVENT = 'X-MICROSOFT-CDO-ALLDAYEVENT';
+
+    public const MICROSOFT_BUSYSTATUS = 'X-MICROSOFT-CDO-BUSYSTATUS';
 
     public function __construct(array $options)
     {
@@ -20,22 +24,26 @@ final class ICSHelper
     /**
      * @return array|Event[]
      */
-    public function getEvents(\DateTimeInterface $start, \DateTimeInterface $end, bool $allDaysEvents = false): array
-    {
+    public function getEvents(\DateTimeInterface $start, \DateTimeInterface $end,
+        array $busyStatuses = [BusyStatus::OutOfOffice, BusyStatus::WorkingElsewhere],
+        int $minDuration = 0
+    ): array {
         $events = [];
-        $now = new \DateTimeImmutable();
         foreach ($this->options['ics_urls'] as $name => $url) {
             // https://github.com/u01jmg3/ics-parser#are-you-using-outlook
             $ical = new ICal($url);
-            $events[$name] = array_filter(
-                array_map(
-                    static fn (IcalEvent $icalEvent) => new Event($icalEvent),
-                    $ical->eventsFromRange(
-                        $start->format(\DateTime::ATOM),
-                        $end->format(\DateTime::ATOM)
+            $events[$name] = array_values(
+                array_filter(
+                    array_map(
+                        static fn (IcalEvent $icalEvent) => new Event($icalEvent),
+                        $ical->eventsFromRange(
+                            $start->format(\DateTime::ATOM),
+                            $end->format(\DateTime::ATOM)
+                        ),
                     ),
-                ),
-                fn (Event $event) => !$allDaysEvents || $event->isAllDayEvent()
+                    fn (Event $event) => in_array($event->getBusyStatus(), $busyStatuses)
+                        && $event->getDuration() > $minDuration
+                )
             );
         }
 

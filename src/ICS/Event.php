@@ -25,16 +25,21 @@ class Event
 
     public function getEndTime(): \DateTimeInterface
     {
-        return new \DateTimeImmutable($this->event->dtend);
-    }
-
-    public function isAllDayEvent(): bool
-    {
-        return self::MICROSOFT_TRUE === $this->event->x_microsoft_cdo_alldayevent;
+        return $this->event->dtend
+            ? new \DateTimeImmutable($this->event->dtend)
+            : new \DateTimeImmutable($this->getStartTime()->format(\DateTimeImmutable::ATOM). ' tomorrow');
     }
 
     public function getBusyStatus(): BusyStatus
     {
-        return BusyStatus::from($this->event->x_microsoft_cdo_busystatus);
+        return BusyStatus::from($this->event->x_microsoft_cdo_busystatus ?? BusyStatus::FREE->value);
+    }
+
+    /**
+     * Get duration in seconds.
+     */
+    public function getDuration(): int
+    {
+        return $this->getEndTime()->getTimestamp() - $this->getStartTime()->getTimestamp();
     }
 }

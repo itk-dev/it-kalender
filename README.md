@@ -21,6 +21,12 @@ Watch for changes during development:
 docker compose run --rm node yarn watch
 ```
 
+## Tests
+
+```sh
+docker compose exec phpfpm php bin/phpunit
+```
+
 ## Coding standards
 
 ```sh

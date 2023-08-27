@@ -42,16 +42,21 @@
   </tr>
   </thead>
   <tbody>
+      {% macro format_time(time) -%}
+          {{ time|date('H:i') }}
+      {%- endmacro %}
   {% for name, items in people %}
     <tr>
       <th>{{ name }}</th>
       {% for date in dates %}
         {% apply spaceless %}
-        <td>
+        <td class="slot">
           {% if items[date] is defined %}
             {% for item in items[date] %}
-              <div class="blob {{ item.type|lower }}" style="width: {{ 100 * item.duration }}%; margin-left: {{ 100 * (item.offset|default(0)) }}%" {% if item.title is defined %}title="{{ item.title }}{% endif %}">
-              </div>
+                <div class="blob {{ item.type|lower }}"
+                    data-start="{{ _self.format_time(item.start) }}"
+                    data-end="{{ _self.format_time(item.end) }}"
+                    {% if item.title is defined %}title="{{ item.title }}"{% endif %}></div>
             {% endfor %}
           {% endif %}
         </td>

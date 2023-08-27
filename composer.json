@@ -9,15 +9,16 @@
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "johngrogg/ics-parser": "^3.2",
+        "johngrogg/ics-parser": "^3.2.1",
         "symfony/console": "6.3.*",
         "symfony/dotenv": "6.3.*",
-        "symfony/flex": "^2",
+        "symfony/flex": "^2.3.3",
         "symfony/framework-bundle": "6.3.*",
         "symfony/options-resolver": "6.3.*",
         "symfony/runtime": "6.3.*",
+        "symfony/translation": "6.3.*",
         "symfony/twig-bundle": "6.3.*",
-        "symfony/webpack-encore-bundle": "^2.0",
+        "symfony/webpack-encore-bundle": "^2.0.1",
         "symfony/yaml": "6.3.*"
     },
     "config": {
@@ -87,6 +88,11 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.23",
         "friendsoftwig/twigcs": "^6.2",
-        "symfony/maker-bundle": "^1.50"
+        "phpunit/phpunit": "^9.6.11",
+        "spatie/icalendar-generator": "^2.5.6",
+        "symfony/browser-kit": "6.3.*",
+        "symfony/css-selector": "6.3.*",
+        "symfony/maker-bundle": "^1.50",
+        "symfony/phpunit-bridge": "^6.3.2"
     }
 }

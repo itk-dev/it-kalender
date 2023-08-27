@@ -32,10 +32,11 @@ class DefaultController extends AbstractController
           'dates' => $dates,
           'people' => [
             '1. Kollega' => [
-              $dates[2] => [
+              $dates[0] => [
                 [
                   'type' => BusyStatus::WorkingElsewhere->value,
-                  'duration' => 1,
+                  'start' => '08:00',
+                  'end' => '16:00',
                 ],
               ],
             ],
@@ -44,14 +45,16 @@ class DefaultController extends AbstractController
               $dates[2] => [
                 [
                   'type' => BusyStatus::WorkingElsewhere->value,
-                  'duration' => 1,
+                  'start' => '08:00',
+                  'end' => '16:00',
                 ],
               ],
               $dates[4] => [
                 [
                   'type' => BusyStatus::OutOfOffice->value,
-                  'duration' => 1,
-                    'title' => 'Afspadsering',
+                  'start' => '08:00',
+                  'end' => '16:00',
+                  'title' => 'Afspadsering',
                 ],
               ],
             ],
@@ -60,13 +63,15 @@ class DefaultController extends AbstractController
               $dates[1] => [
                 [
                   'type' => BusyStatus::WorkingElsewhere->value,
-                  'duration' => 1,
+                  'start' => '08:00',
+                  'end' => '16:00',
                 ],
               ],
               $dates[4] => [
                 [
                   'type' => BusyStatus::WorkingElsewhere->value,
-                  'duration' => 1,
+                  'start' => '08:00',
+                  'end' => '16:00',
                 ],
               ],
             ],
@@ -75,24 +80,28 @@ class DefaultController extends AbstractController
               $dates[2] => [
                 [
                   'type' => BusyStatus::WorkingElsewhere->value,
-                  'duration' => 1,
+                  'start' => '08:00',
+                  'end' => '16:00',
                 ],
               ],
               $dates[3] => [
                 [
                   'type' => BusyStatus::OutOfOffice->value,
-                  'duration' => 1 / 2,
-                    'title' => 'Tandlæge (10–12)',
+                  'start' => '08:00',
+                  'end' => '12:00',
+                  'title' => 'Tandlæge (10–12)',
                 ],
                 [
                   'type' => BusyStatus::WorkingElsewhere->value,
-                  'duration' => 1 / 2,
+                  'start' => '12:00',
+                  'end' => '16:00',
                 ],
               ],
               $dates[4] => [
                 [
                   'type' => BusyStatus::OutOfOffice->value,
-                  'duration' => 1 / 2,
+                  'start' => '08:00',
+                  'end' => '16:00',
                 ],
               ],
             ],
@@ -101,8 +110,8 @@ class DefaultController extends AbstractController
               $dates[2] => [
                 [
                   'type' => BusyStatus::WorkingElsewhere->value,
-                  'duration' => 1 / 2,
-                  'offset' => 1 / 2,
+                  'start' => '12:00',
+                  'end' => '16:00',
                 ],
               ],
             ],

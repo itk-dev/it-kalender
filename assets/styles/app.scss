@@ -52,13 +52,6 @@ tr > *:first-child {
   width: 20%;
 }
 
-.blob {
-  overflow: hidden;
-  height: 2rem;
-  display: inline-block;
-  vertical-align: middle;
-}
-
 td .header {
   display: flex;
   justify-content: space-between;
@@ -68,6 +61,8 @@ td .header {
 .legend .blob {
   width: 1em;
   height: 1em;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .workingelsewhere {
@@ -76,4 +71,24 @@ td .header {
 
 .oof {
   background: $color-out-of-office;
+}
+
+.slot {
+  position: relative;
+
+  .blob {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    &[data-start="12:00"] {
+      left: 50%;
+    }
+
+    &[data-end="12:00"] {
+      right: 50%;
+    }
+  }
 }
