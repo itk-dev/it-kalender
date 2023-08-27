@@ -10,14 +10,12 @@ class CalendarFixture extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        for ($i = 0; $i < 4; ++$i) {
-            $calendar = new Calendar();
-            $calendar
-                ->setName(sprintf('Calendar %d', $i))
-                ->setSlug(sprintf('calendar-%02d', $i));
-            $this->setReference(sprintf('calendar:calendar%02d', $i), $calendar);
-            $manager->persist($calendar);
-        }
+        $calendar = new Calendar();
+        $calendar
+            ->setName('Test calendar')
+            ->setSlug('test');
+        $this->setReference('calendar:test', $calendar);
+        $manager->persist($calendar);
 
         $manager->flush();
     }

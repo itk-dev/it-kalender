@@ -24,8 +24,11 @@ class PersonCrudController extends AbstractCrudController
     {
         yield TextField::new('name', new TranslatableMessage('Name'));
         yield UrlField::new('icsUrl', new TranslatableMessage('ICS URL'));
-        yield CollectionField::new('calendars', new TranslatableMessage('Calendars'));
+        yield CollectionField::new('calendars', new TranslatableMessage('Calendars'))
+            ->hideOnForm();
 
+        yield DateTimeField::new('icsReadAt', new TranslatableMessage('ICS read at'))
+            ->hideOnForm();
         yield DateTimeField::new('createdAt', new TranslatableMessage('Created at'))
             ->hideOnForm();
         yield DateTimeField::new('updatedAt', new TranslatableMessage('Updated at'))

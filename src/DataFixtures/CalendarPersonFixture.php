@@ -13,9 +13,23 @@ class CalendarPersonFixture extends Fixture implements DependentFixtureInterface
     {
         $person = new CalendarPerson();
         $person
-            ->setCalendar($this->getReference('calendar:calendar01'))
-            ->setPerson($this->getReference('person:person02'))
+            ->setCalendar($this->getReference('calendar:test'))
+            ->setPerson($this->getReference('person:person-0'))
+            ->setPosition(1);
+        $manager->persist($person);
+
+        $person = new CalendarPerson();
+        $person
+            ->setCalendar($this->getReference('calendar:test'))
+            ->setPerson($this->getReference('person:person-1'))
             ->setPosition(0);
+        $manager->persist($person);
+
+        $person = new CalendarPerson();
+        $person
+            ->setCalendar($this->getReference('calendar:test'))
+            ->setPerson($this->getReference('person:person-2'))
+            ->setPosition(2);
         $manager->persist($person);
 
         $manager->flush();

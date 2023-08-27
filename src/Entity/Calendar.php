@@ -118,4 +118,15 @@ class Calendar
             ++$position;
         }
     }
+
+    /**
+     * @return Person[]
+     */
+    public function getPeople(): array
+    {
+        return array_map(
+            static fn (CalendarPerson $calendarPerson) => $calendarPerson->getPerson(),
+            $this->calendarPeople->toArray()
+        );
+    }
 }

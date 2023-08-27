@@ -18,6 +18,11 @@ class Event
         return $this->event->{$name};
     }
 
+    public function getSummary(): string
+    {
+        return $this->event->summary;
+    }
+
     public function getStartTime(): \DateTimeInterface
     {
         return new \DateTimeImmutable($this->event->dtstart);

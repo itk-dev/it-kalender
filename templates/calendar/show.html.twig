@@ -16,9 +16,7 @@
     </td>
     <td colspan="{{ dates|length }}">
       <div class="header">
-        <div class="month">
-          {{ dates|first|date('F') }}
-        </div>
+      <div></div>
         <div class="legend">
           <span class="blob workingelsewhere"></span> {{ 'Working elsewhere'|trans }}
           <span class="blob oof"></span> {{ 'Out of office'|trans }}
@@ -36,6 +34,12 @@
     </td>
     {% for date in dates %}
       <th>
+        <div class="month">
+          {% if loop.index0 == 0 or dates[loop.index0 - 1]|date('F') != dates[loop.index0]|date('F') %}
+            {{ date|date('F') }}
+          {% endif %}
+        </div>
+
         {{ date|date('j') }}<br/>{{ date|date('l') }}
       </th>
     {% endfor %}
@@ -56,7 +60,7 @@
                 <div class="blob {{ item.type|lower }}"
                     data-start="{{ _self.format_time(item.start) }}"
                     data-end="{{ _self.format_time(item.end) }}"
-                    {% if item.title is defined %}title="{{ item.title }}"{% endif %}></div>
+                    title="{{ item.summary }} ({{ item.event.startTime|date('H:i') }}–{{ item.event.endTime|date('H:i') }})"></div>
             {% endfor %}
           {% endif %}
         </td>

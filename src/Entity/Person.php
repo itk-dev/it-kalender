@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PersonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Types\UuidType;
@@ -29,6 +30,12 @@ class Person
 
     #[ORM\OneToMany(mappedBy: 'person', targetEntity: CalendarPerson::class)]
     private Collection $calendarPeople;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $ics = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $icsReadAt = null;
 
     public function __construct()
     {
@@ -75,5 +82,29 @@ class Person
             static fn (CalendarPerson $calendarPerson) => $calendarPerson->getCalendar(),
             $this->calendarPeople->toArray()
         );
+    }
+
+    public function getIcs(): ?string
+    {
+        return $this->ics;
+    }
+
+    public function setIcs(?string $ics): static
+    {
+        $this->ics = $ics;
+
+        return $this;
+    }
+
+    public function getIcsReadAt(): ?\DateTimeImmutable
+    {
+        return $this->icsReadAt;
+    }
+
+    public function setIcsReadAt(?\DateTimeImmutable $icsReadAt): static
+    {
+        $this->icsReadAt = $icsReadAt;
+
+        return $this;
     }
 }

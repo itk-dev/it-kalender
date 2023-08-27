@@ -47,7 +47,7 @@ jobs:
             - run: docker network create frontend
             - run: docker compose run --rm node yarn install
             - name: coding-standards-check/markdownlint
-              run: docker compose run --rm node yarn coding-standards-check/scss
+              run: docker compose run --rm node yarn coding-standards-check/markdownlint
 
     coding-standards-check_scss:
         name: coding-standards-check/scss
