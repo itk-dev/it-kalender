@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CalendarRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Types\UuidType;
@@ -24,6 +26,14 @@ class Calendar
     #[NotBlank]
     private ?string $name = null;
 
+    #[ORM\OneToMany(mappedBy: 'calendar', targetEntity: CalendarPerson::class, orphanRemoval: true)]
+    private Collection $calendarPeople;
+
+    public function __construct()
+    {
+        $this->calendarPeople = new ArrayCollection();
+    }
+
     public function getId(): ?Uuid
     {
         return $this->id;
@@ -42,6 +52,36 @@ class Calendar
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CalendarPerson>
+     */
+    public function getCalendarPeople(): Collection
+    {
+        return $this->calendarPeople;
+    }
+
+    public function addCalendarPerson(CalendarPerson $calendarPerson): static
+    {
+        if (!$this->calendarPeople->contains($calendarPerson)) {
+            $this->calendarPeople->add($calendarPerson);
+            $calendarPerson->setCalendar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCalendarPerson(CalendarPerson $calendarPerson): static
+    {
+        if ($this->calendarPeople->removeElement($calendarPerson)) {
+            // set the owning side to null (unless already changed)
+            if ($calendarPerson->getCalendar() === $this) {
+                $calendarPerson->setCalendar(null);
+            }
+        }
 
         return $this;
     }
