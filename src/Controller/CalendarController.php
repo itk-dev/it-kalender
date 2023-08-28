@@ -32,6 +32,7 @@ class CalendarController extends AbstractController
     public function show(Request $request, Calendar $calendar): Response
     {
         $parameters = $this->getData($request, $calendar);
+        $parameters['calendar'] = $calendar;
 
         return $this->render('calendar/show.html.twig', $parameters);
     }

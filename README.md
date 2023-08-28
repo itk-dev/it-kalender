@@ -13,9 +13,7 @@ open "http://$(docker compose port nginx 8080)"
 
 ```sh
 # Load fixtures
-docker compose exec phpfpm bin/console doctrine:fixtures:load --no-interaction
-# Read ICS data from people
-docker compose exec phpfpm bin/console app:read-ics
+docker compose exec phpfpm composer fixtures:load
 # Show the test calendar
 open "http://$(docker compose port nginx 8080)/test?today=2001-01-01"
 # Show the test calendar data

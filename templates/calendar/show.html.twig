@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ 'Presence'|trans }} – {{ title }}</title>
+    <title>{{ 'Presence'|trans }} – {{ calendar.name }}</title>
     {{ encore_entry_link_tags('calendar/show') }}
   </head>
   <body>
@@ -12,7 +12,7 @@
   <tr>
     <td>
       {{ 'Presence'|trans }}
-      <h1>{{ title }}</h1>
+      <h1>{{ calendar.name }}</h1>
     </td>
     <td colspan="{{ dates|length }}">
       <div class="header">
@@ -22,7 +22,7 @@
           <span class="blob oof"></span> {{ 'Out of office'|trans }}
         </div>
         <div class="logo">
-          <img src="{{ logo_url }}" alt="{{ title }}"/>
+            <img src="{{ vich_uploader_asset(calendar, 'logoFile') }}" alt="{{ calendar.name }}"/>
         </div>
       </div>
     </td>

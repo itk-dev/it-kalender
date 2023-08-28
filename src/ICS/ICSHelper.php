@@ -42,8 +42,6 @@ final class ICSHelper
         }
 
         $data = [
-            'title' => $calendar->getName(),
-            'logo_url' => 'logo.svg',
             'dates' => $dates,
             'people' => [],
         ];

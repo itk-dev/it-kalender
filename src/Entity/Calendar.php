@@ -10,11 +10,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: CalendarRepository::class)]
 #[UniqueEntity(fields: ['slug'])]
+#[Vich\Uploadable]
 class Calendar
 {
     use TimestampableEntity;
@@ -32,6 +35,20 @@ class Calendar
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank]
     private ?string $slug = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $logo = null;
+
+    #[Vich\UploadableField(mapping: 'uploads', fileNameProperty: 'logo')]
+    #[Assert\File(
+        mimeTypes: [
+            'image/jpeg',
+            'image/png',
+            'image/svg+xml',
+        ],
+        maxSize: '1m'
+    )]
+    private ?File $logoFile = null;
 
     #[ORM\ManyToMany(targetEntity: Person::class, inversedBy: 'calendars')]
     #[ORM\OrderBy(['name' => Criteria::ASC])]
@@ -72,6 +89,36 @@ class Calendar
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getLogo(): ?string
+    {
+        return $this->logo;
+    }
+
+    public function setLogo(?string $logo): self
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
+    public function getLogoFile(): ?File
+    {
+        return $this->logoFile;
+    }
+
+    public function setLogoFile(?File $logoFile): self
+    {
+        $this->logoFile = $logoFile;
+
+        if (null !== $logoFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
 
         return $this;
     }

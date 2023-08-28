@@ -2,7 +2,9 @@
 
 namespace App\Controller\Admin;
 
+use App\EasyAdminHelper;
 use App\Entity\Calendar;
+use App\Field\VichImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -23,6 +25,18 @@ class CalendarCrudController extends AbstractCrudController
     {
         yield TextField::new('name', new TranslatableMessage('Name'));
         yield TextField::new('slug', new TranslatableMessage('Slug'));
+
+        if (in_array($pageName, [Crud::PAGE_NEW, Crud::PAGE_EDIT], true)) {
+            $entity = $this->getContext()->getEntity()->getInstance();
+            $attr = EasyAdminHelper::getFileInputAttributes($entity, 'logoFile');
+
+            yield VichImageField::new('logoFile')
+                ->setFormTypeOption('allow_delete', false)
+                ->setFormTypeOption('attr', $attr);
+        } else {
+            yield VichImageField::new('logo');
+        }
+
         yield AssociationField::new('people', new TranslatableMessage('People'));
         yield DateTimeField::new('createdAt', new TranslatableMessage('Created at'))
             ->hideOnForm();

@@ -1,0 +1,6 @@
+{# https://stackoverflow.com/a/65313973 #}
+{% if field.value %}
+    <div class="thumbnail">
+        <img style="max-height: 2em" src="{{ vich_uploader_asset(entity.instance, field.property ~ 'File', entity.fqcn) }}"/>
+    </div>
+{% endif %}
