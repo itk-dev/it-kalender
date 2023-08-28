@@ -15,7 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CalendarRepository::class)]
 #[UniqueEntity(fields: ['slug'])]
-#[ORM\HasLifecycleCallbacks]
 class Calendar
 {
     use TimestampableEntity;
@@ -30,18 +29,17 @@ class Calendar
     #[Assert\NotBlank]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'calendar', targetEntity: CalendarPerson::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
-    #[ORM\OrderBy(['position' => Criteria::ASC])]
-    #[Assert\Valid]
-    private Collection $calendarPeople;
-
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank]
     private ?string $slug = null;
 
+    #[ORM\ManyToMany(targetEntity: Person::class, inversedBy: 'calendars')]
+    #[ORM\OrderBy(['name' => Criteria::ASC])]
+    private Collection $people;
+
     public function __construct()
     {
-        $this->calendarPeople = new ArrayCollection();
+        $this->people = new ArrayCollection();
     }
 
     public function getId(): ?Uuid
@@ -66,36 +64,6 @@ class Calendar
         return $this;
     }
 
-    /**
-     * @return Collection<int, CalendarPerson>
-     */
-    public function getCalendarPeople(): Collection
-    {
-        return $this->calendarPeople;
-    }
-
-    public function addCalendarPerson(CalendarPerson $calendarPerson): static
-    {
-        if (!$this->calendarPeople->contains($calendarPerson)) {
-            $this->calendarPeople->add($calendarPerson);
-            $calendarPerson->setCalendar($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCalendarPerson(CalendarPerson $calendarPerson): static
-    {
-        if ($this->calendarPeople->removeElement($calendarPerson)) {
-            // set the owning side to null (unless already changed)
-            if ($calendarPerson->getCalendar() === $this) {
-                $calendarPerson->setCalendar(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -108,25 +76,27 @@ class Calendar
         return $this;
     }
 
-    #[ORM\PrePersist]
-    #[ORM\PreUpdate]
-    public function setPeoplePositions()
+    /**
+     * @return Collection<int, Person>
+     */
+    public function getPeople(): Collection
     {
-        $position = 0;
-        foreach ($this->getCalendarPeople() as $calendarPerson) {
-            $calendarPerson->setPosition($position);
-            ++$position;
-        }
+        return $this->people;
     }
 
-    /**
-     * @return Person[]
-     */
-    public function getPeople(): array
+    public function addPerson(Person $person): static
     {
-        return array_map(
-            static fn (CalendarPerson $calendarPerson) => $calendarPerson->getPerson(),
-            $this->calendarPeople->toArray()
-        );
+        if (!$this->people->contains($person)) {
+            $this->people->add($person);
+        }
+
+        return $this;
+    }
+
+    public function removePerson(Person $person): static
+    {
+        $this->people->removeElement($person);
+
+        return $this;
     }
 }

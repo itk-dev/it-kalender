@@ -6,13 +6,12 @@ use App\Entity\Person;
 use App\ICS\BusyStatus;
 use App\ICS\ICSHelper;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Spatie\IcalendarGenerator\Components\Calendar;
 use Spatie\IcalendarGenerator\Components\Event;
 use Spatie\IcalendarGenerator\Properties\TextProperty;
 
-class PersonFixture extends Fixture implements DependentFixtureInterface
+class PersonFixture extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
@@ -78,12 +77,5 @@ class PersonFixture extends Fixture implements DependentFixtureInterface
         $manager->persist($person);
 
         $manager->flush();
-    }
-
-    public function getDependencies()
-    {
-        return [
-            CalendarFixture::class,
-        ];
     }
 }

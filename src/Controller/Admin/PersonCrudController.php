@@ -7,7 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
@@ -24,7 +24,7 @@ class PersonCrudController extends AbstractCrudController
     {
         yield TextField::new('name', new TranslatableMessage('Name'));
         yield UrlField::new('icsUrl', new TranslatableMessage('ICS URL'));
-        yield CollectionField::new('calendars', new TranslatableMessage('Calendars'))
+        yield AssociationField::new('calendars', new TranslatableMessage('Calendars'))
             ->hideOnForm();
 
         yield DateTimeField::new('icsReadAt', new TranslatableMessage('ICS read at'))

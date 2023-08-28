@@ -28,18 +28,18 @@ class Person
     #[ORM\Column(length: 255)]
     private ?string $icsUrl = null;
 
-    #[ORM\OneToMany(mappedBy: 'person', targetEntity: CalendarPerson::class)]
-    private Collection $calendarPeople;
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $ics = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $icsReadAt = null;
 
+    #[ORM\ManyToMany(targetEntity: Calendar::class, mappedBy: 'people')]
+    private Collection $calendars;
+
     public function __construct()
     {
-        $this->calendarPeople = new ArrayCollection();
+        $this->calendars = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -76,14 +76,6 @@ class Person
         return $this;
     }
 
-    public function getCalendars(): array
-    {
-        return array_map(
-            static fn (CalendarPerson $calendarPerson) => $calendarPerson->getCalendar(),
-            $this->calendarPeople->toArray()
-        );
-    }
-
     public function getIcs(): ?string
     {
         return $this->ics;
@@ -104,6 +96,33 @@ class Person
     public function setIcsReadAt(?\DateTimeImmutable $icsReadAt): static
     {
         $this->icsReadAt = $icsReadAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Calendar>
+     */
+    public function getCalendars(): Collection
+    {
+        return $this->calendars;
+    }
+
+    public function addCalendar(Calendar $calendar): static
+    {
+        if (!$this->calendars->contains($calendar)) {
+            $this->calendars->add($calendar);
+            $calendar->addPerson($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCalendar(Calendar $calendar): static
+    {
+        if ($this->calendars->removeElement($calendar)) {
+            $calendar->removePerson($this);
+        }
 
         return $this;
     }
