@@ -3,6 +3,8 @@
 namespace App\ICS;
 
 use App\Entity\Calendar;
+use App\Entity\Person;
+use Doctrine\ORM\EntityManagerInterface;
 use ICal\Event as IcalEvent;
 use ICal\ICal;
 
@@ -16,6 +18,21 @@ final class ICSHelper
     public const MICROSOFT_ALLDAYEVENT = 'X-MICROSOFT-CDO-ALLDAYEVENT';
 
     public const MICROSOFT_BUSYSTATUS = 'X-MICROSOFT-CDO-BUSYSTATUS';
+
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager
+    ) {
+    }
+
+    public function readICS(Person $person)
+    {
+        $ics = file_get_contents($person->getIcsUrl());
+        $person
+            ->setIcs($ics)
+            ->setIcsReadAt(new \DateTimeImmutable());
+        $this->entityManager->persist($person);
+        $this->entityManager->flush();
+    }
 
     public function getCalendarData(Calendar $calendar, \DateTimeImmutable $now = new \DateTimeImmutable()): array
     {
