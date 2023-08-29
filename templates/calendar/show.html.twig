@@ -1,74 +1,84 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ 'Presence'|trans }} – {{ calendar.name }}</title>
-    {{ encore_entry_link_tags('calendar/show') }}
-  </head>
-  <body>
-<table>
-  <thead>
-  <tr>
-    <td>
-      {{ 'Presence'|trans }}
-      <h1>{{ calendar.name }}</h1>
-    </td>
-    <td colspan="{{ dates|length }}">
-      <div class="header">
-      <div></div>
-        <div class="legend">
-          <span class="blob workingelsewhere"></span> {{ 'Working elsewhere'|trans }}
-          <span class="blob oof"></span> {{ 'Out of office'|trans }}
-        </div>
-        <div class="logo">
-            <img src="{{ vich_uploader_asset(calendar, 'logoFile') }}" alt="{{ calendar.name }}"/>
-        </div>
-      </div>
-    </td>
-  </tr>
-  <tr>
-    <td>
-    {{ 'Week'|trans }}
-    <h2>{{ dates|first|date('W') }}</h2>
-    </td>
-    {% for date in dates %}
-      <th>
-        <div class="month">
-          {% if loop.index0 == 0 or dates[loop.index0 - 1]|date('F') != dates[loop.index0]|date('F') %}
-            {{ date|date('F') }}
-          {% endif %}
-        </div>
+{% set title = 'Calendars'|trans %}
 
-        {{ date|date('j') }}<br/>{{ date|date('l') }}
-      </th>
-    {% endfor %}
-  </tr>
-  </thead>
-  <tbody>
-      {% macro format_time(time) -%}
-          {{ time|date('H:i') }}
-      {%- endmacro %}
-  {% for name, items in people %}
-    <tr>
-      <th>{{ name }}</th>
-      {% for date in dates %}
-        {% apply spaceless %}
-        <td class="slot">
-          {% if items[date] is defined %}
-            {% for item in items[date] %}
-                <div class="blob {{ item.type|lower }}"
-                    data-start="{{ _self.format_time(item.start) }}"
-                    data-end="{{ _self.format_time(item.end) }}"
-                    title="{{ item.summary }} ({{ item.event.startTime|date('H:i') }}–{{ item.event.endTime|date('H:i') }})"></div>
-            {% endfor %}
-          {% endif %}
-        </td>
-        {% endapply %}
-      {% endfor %}
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
-  </body>
-</html>
+{% extends "base.html.twig" %}
+
+{% block meta %}
+    <title>{{ 'Presence'|trans }} – {{ title }}</title>
+{% endblock %}
+
+{% block styles %}
+    {{ encore_entry_link_tags('calendar/show') }}
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid bg-light h-100">
+        <header>
+            <div class="row bg-white">
+                <div class="col-md-3 bg-dark text-white px-3 pt-3">
+                    <span class="text-primary small">{{ 'Presence'|trans }}</span>
+                    <h1>{{ title }}</h1>
+                </div>
+                <div class="col d-flex justify-content-center align-items-center">
+                    <div class="d-flex column-gap-5">
+                        <div class="d-flex column-gap-2">
+                            <span class="bg-primary d-inline-block" style="width: 20px; height: 20px;"></span> {{ 'Working elsewhere'|trans }}
+                        </div>
+                        <div class="d-flex column-gap-2">
+                            <span class="bg-secondary d-inline-block" style="width: 20px; height: 20px;"></span> {{ 'Out of office'|trans }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto ms-auto d-flex justify-content-center align-items-center">
+                    <div class="logo">
+                        <img src="{{ vich_uploader_asset(calendar, 'logoFile') }}" alt="{{ title }}"/>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="row bg-white">
+                <div class="col-md-3 bg-dark text-white border-bottom border-color-white px-3 pt-3">
+                    <span class="text-primary small">{{ 'Week'|trans }}</span>
+                    <h2>{{ dates|first|date('W') }}</h2>
+                </div>
+                <div class="col">
+                    {{ dates|first|date('F') }}
+
+                    <div class="row">
+                        {% for date in dates %}
+                            <div class="col border-bottom border-end p-3 {% if date == "now"|date("Y-m-d")  %}bg-white {% else %}bg-light {% endif %}">
+                                <h2 class="text-primary">{{ date|date('j') }}</h2>
+                                {{ date|date('l') }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="people">
+                {% macro format_time(time) -%}
+                    {{ time|date('H:i') }}
+                {%- endmacro %}
+
+                {% for name, items in people %}
+                    <div class="row">
+                        <div class="col-md-3 bg-dark text-white border-bottom border-color-white py-2">{{ name }}</div>
+                        {% for date in dates %}
+                            {% apply spaceless %}
+                                <div class="slot col border-bottom border-end {% if date == "now"|date("Y-m-d")  %}bg-white {% else %}bg-light {% endif %}">
+                                    {% if items[date] is defined %}
+                                        {% for item in items[date] %}
+                                            <div class="slot-blob {{ item.type|lower }}"
+                                                data-start="{{ _self.format_time(item.start) }}"
+                                                data-end="{{ _self.format_time(item.end) }}"
+                                                title="{{ item.summary }} ({{ item.event.startTime|date('H:i') }}–{{ item.event.endTime|date('H:i') }})"></div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            {% endapply %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </main>
+    </div>
+{% endblock %}
