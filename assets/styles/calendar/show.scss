@@ -1,76 +1,20 @@
-$color-out-of-office: #00f;
-$color-working-elsewhere: #f0f;
-$border-color: #ccc;
-$border-width: 1px;
-
-body {
-  padding: 1rem;
-  font-family: sans-serif;
-}
+@import "../custom-variables";
 
 .logo img {
   max-height: 3rem;
 }
 
-table {
-  table-layout: fixed;
-  width: 100%;
-  border-collapse: collapse;
-
-  th, td {
-    text-align: left;
-  }
-}
-
-thead {
-  th, td {
-    vertical-align: bottom;
-  }
-}
-
-tbody tr {
-  border-top: solid $border-width $border-color;
-}
-
-thead th,
-tbody td {
-  border-right: solid $border-width $border-color;
-}
-
-thead th:last-child,
-tbody td:last-child {
-  border-right: initial;
-}
-
-th, td {
-  padding: .25rem;
-}
-
-tr > *:first-child {
-  background: #333;
-  color: #eee;
-  width: 20%;
-}
-
-td .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-.legend .blob {
-  width: 1em;
-  height: 1em;
-  display: inline-block;
-  vertical-align: middle;
+.people {
+  display: grid;
+  grid-template-rows: 1fr;
 }
 
 .workingelsewhere {
-  background: $color-working-elsewhere;
+  background: $primary;
 }
 
 .oof {
-  background: $color-out-of-office;
+  background: $secondary;
 }
 
 .month {

@@ -1,20 +1,37 @@
-<!doctype html>
 {% set title = 'Calendars'|trans %}
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ 'Presence'|trans }} – {{ title }}</title>
-    {{ encore_entry_link_tags('app') }}
-  </head>
-  <body>
-  <div class="container-fluid">
-      <h1>{{ title }}</h1>
 
-      <div class="list-group">
-          {% for calendar in calendars %}
-              <a href="{{ path('calendar_show', {slug: calendar.slug}) }}" class="list-group-item list-group-item-action">{{ calendar.name }}</a>
-          {% endfor %}
-      </div>
-  </body>
-</html>
+{% extends "base.html.twig" %}
+
+{% block meta %}
+    <title>{{ 'Presence'|trans }} – {{ title }}</title>
+{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid bg-light h-100">
+        <header>
+            <div class="row bg-white">
+                <div class="col-md-3 bg-dark text-white px-3 pt-3">
+                    <span class="text-primary">{{ 'Presence'|trans }}</span>
+                    <h1>{{ title }}</h1>
+                </div>
+                <div class="col-auto ms-auto d-flex justify-content-center align-items-center">
+                    <div class="logo">
+                        <img src="{{ vich_uploader_asset(calendar, 'logoFile') }}" alt="{{ title }}"/>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="py-3">
+            <label for="calendars" class="mb-1">{{ 'Choose your calendar'|trans }}</label>
+            <div id="calendars" class="list-group">
+                {% for calendar in calendars %}
+                    <a href="{{ path('calendar_show', {slug: calendar.slug}) }}" class="list-group-item list-group-item-action">{{ calendar.name }}</a>
+                {% endfor %}
+            </div>
+        </main>
+
+    </div>
+{% endblock %}
