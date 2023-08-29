@@ -24,19 +24,20 @@
 .slot {
   position: relative;
 
-  .blob {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
+}
 
-    &[data-start="12:00"] {
-      left: 50%;
-    }
+.slot-blob {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
 
-    &[data-end="12:00"] {
-      right: 50%;
-    }
+  &[data-start="12:00"] {
+    left: 50%;
+  }
+
+  &[data-end="12:00"] {
+    right: 50%;
   }
 }

@@ -65,10 +65,9 @@
                         {% for date in dates %}
                             {% apply spaceless %}
                                 <div class="slot col border-bottom border-end {% if date == "now"|date("Y-m-d")  %}bg-white {% else %}bg-light {% endif %}">
-                                    {{ date }}
                                     {% if items[date] is defined %}
                                         {% for item in items[date] %}
-                                            <div class="blob {{ item.type|lower }}"
+                                            <div class="slot-blob {{ item.type|lower }}"
                                                 data-start="{{ _self.format_time(item.start) }}"
                                                 data-end="{{ _self.format_time(item.end) }}"
                                                 title="{{ item.summary }} ({{ item.event.startTime|date('H:i') }}–{{ item.event.endTime|date('H:i') }})"></div>
