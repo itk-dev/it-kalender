@@ -46,6 +46,8 @@ class PersonCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
+            ->setEntityLabelInSingular(new TranslatableMessage('Person'))
+            ->setEntityLabelInPlural(new TranslatableMessage('People'))
             ->showEntityActionsInlined();
     }
 

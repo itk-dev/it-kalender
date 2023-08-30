@@ -25,6 +25,8 @@
         "symfony/validator": "6.3.*",
         "symfony/webpack-encore-bundle": "^2.0.1",
         "symfony/yaml": "6.3.*",
+        "twig/extra-bundle": "^3.7",
+        "twig/intl-extra": "^3.7",
         "vich/uploader-bundle": "^2.2"
     },
     "config": {
@@ -84,6 +86,13 @@
         "fixtures:load": [
             "bin/console doctrine:fixtures:load --no-interaction",
             "bin/console app:read-ics"
+        ],
+        "update-translations": [
+            "# We need a translation from en to en (!) (without prefix) to be able to process placeholders in en.",
+            "DEFAULT_LOCALE=en bin/console translation:extract --clean --force en --prefix=''",
+            "DEFAULT_LOCALE=en bin/console translation:extract --clean --force da",
+            "# Mark default translations (prefixed with `__`) as “Needs work” in Danish translations",
+            "sed --in-place='' 's/<target>__/<target state=\"needs-l10n\">__/' translations/*.da.*xlf"
         ]
     },
     "conflict": {

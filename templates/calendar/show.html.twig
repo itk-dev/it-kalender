@@ -3,7 +3,7 @@
 {% extends "base.html.twig" %}
 
 {% block meta %}
-    <title>{{ 'Presence'|trans }} – {{ title }}</title>
+    <title>{{ 'Presence'|trans }} – {{ calendar.name }}</title>
 {% endblock %}
 
 {% block styles %}
@@ -16,7 +16,7 @@
             <div class="row bg-white">
                 <div class="col-md-3 bg-dark text-white px-3 pt-3">
                     <span class="text-primary small">{{ 'Presence'|trans }}</span>
-                    <h1>{{ title }}</h1>
+                    <h1>{{ calendar.name }}</h1>
                 </div>
                 <div class="col d-flex justify-content-center align-items-center">
                     <div class="d-flex column-gap-5">
@@ -39,16 +39,17 @@
             <div class="row bg-white">
                 <div class="col-md-3 bg-dark text-white border-bottom border-color-white px-3 pt-3">
                     <span class="text-primary small">{{ 'Week'|trans }}</span>
-                    <h2>{{ dates|first|date('W') }}</h2>
+                    <h2>{{ dates|first|format_datetime(pattern='ww') }}</h2>
                 </div>
                 <div class="col">
-                    {{ dates|first|date('F') }}
+                    {{ dates|first|format_datetime(pattern='MMMM') }}
 
                     <div class="row">
                         {% for date in dates %}
-                            <div class="col border-bottom border-end p-3 {% if date == "now"|date("Y-m-d")  %}bg-white {% else %}bg-light {% endif %}">
-                                <h2 class="text-primary">{{ date|date('j') }}</h2>
-                                {{ date|date('l') }}
+                            <div class="col border-bottom border-end p-3 {{ loop.first ? 'bg-white' : 'bg-light' }}">
+                                {# https://unicode-org.github.io/icu/userguide/format_parse/datetime/#datetime-format-syntax #}
+                                <h2 class="text-primary">{{ date|format_datetime(pattern='dd') }}</h2>
+                                {{ date|format_datetime(pattern='EEEE') }}
                             </div>
                         {% endfor %}
                     </div>
@@ -64,8 +65,8 @@
                         <div class="col-md-3 bg-dark text-white border-bottom border-color-white py-2">{{ name }}</div>
                         {% for date in dates %}
                             {% apply spaceless %}
-                                <div class="slot col border-bottom border-end {% if date == "now"|date("Y-m-d")  %}bg-white {% else %}bg-light {% endif %}">
-                                    {% if items[date] is defined %}
+                            <div class="slot col border-bottom border-end {{ loop.first ? 'bg-white' : 'bg-light' }}">
+                                {% if items[date] is defined %}
                                         {% for item in items[date] %}
                                             <div class="slot-blob {{ item.type|lower }}"
                                                 data-start="{{ _self.format_time(item.start) }}"

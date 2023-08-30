@@ -30,11 +30,11 @@ class CalendarCrudController extends AbstractCrudController
             $entity = $this->getContext()->getEntity()->getInstance();
             $attr = EasyAdminHelper::getFileInputAttributes($entity, 'logoFile');
 
-            yield VichImageField::new('logoFile')
+            yield VichImageField::new('logoFile', new TranslatableMessage('Logo file'))
                 ->setFormTypeOption('allow_delete', false)
                 ->setFormTypeOption('attr', $attr);
         } else {
-            yield VichImageField::new('logo');
+            yield VichImageField::new('logo', new TranslatableMessage('Logo'));
         }
 
         yield AssociationField::new('people', new TranslatableMessage('People'));
@@ -47,6 +47,8 @@ class CalendarCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
+            ->setEntityLabelInSingular(new TranslatableMessage('Calendar'))
+            ->setEntityLabelInPlural(new TranslatableMessage('Calendars'))
             ->showEntityActionsInlined();
     }
 
