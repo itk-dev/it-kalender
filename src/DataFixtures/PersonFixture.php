@@ -32,7 +32,7 @@ class PersonFixture extends Fixture
             ->event(Event::create('Test event 2')
                 ->startsAt(new \DateTimeImmutable('2001-01-03 08:00:00'))
                 ->endsAt(new \DateTimeImmutable('2001-01-03 12:00:00'))
-                ->appendProperty(TextProperty::create(ICSHelper::MICROSOFT_BUSYSTATUS, BusyStatus::OutOfOffice->value))
+                ->appendProperty(TextProperty::create(ICSHelper::MICROSOFT_BUSYSTATUS, BusyStatus::WorkingElsewhere->value))
             )
             ->get();
         $filename = tempnam(sys_get_temp_dir(), uniqid());
@@ -47,7 +47,7 @@ class PersonFixture extends Fixture
             ->event(Event::create('Test event')
                 ->startsAt(new \DateTimeImmutable('2001-01-01 12:00:00'))
                 ->endsAt(new \DateTimeImmutable('2001-01-01 16:00:00'))
-                ->appendProperty(TextProperty::create(ICSHelper::MICROSOFT_BUSYSTATUS, BusyStatus::WorkingElsewhere->value))
+                ->appendProperty(TextProperty::create(ICSHelper::MICROSOFT_BUSYSTATUS, BusyStatus::OutOfOffice->value))
             )
             ->event(Event::create('Test event')
                 ->startsAt(new \DateTimeImmutable('2001-01-01 09:00:00'))
