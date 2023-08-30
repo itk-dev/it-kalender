@@ -63,15 +63,15 @@
       </trans-unit>
       <trans-unit id="6GlQQWd" resname="Logo file">
         <source>Logo file</source>
-        <target state="needs-l10n">__Logo file</target>
+        <target state="translated">Logo</target>
       </trans-unit>
       <trans-unit id="1wfcLxk" resname="Logo">
         <source>Logo</source>
-        <target state="needs-l10n">__Logo</target>
+        <target state="translated">Logo</target>
       </trans-unit>
       <trans-unit id="YAfbY_G" resname="Person">
         <source>Person</source>
-        <target state="needs-l10n">__Person</target>
+        <target state="translated">Person</target>
       </trans-unit>
     </body>
   </file>
