@@ -135,8 +135,14 @@ final class ICSHelper
         array $busyStatuses = [BusyStatus::OutOfOffice, BusyStatus::WorkingElsewhere],
         int $minDuration = 0
     ): array {
-        // https://github.com/u01jmg3/ics-parser#are-you-using-outlook
-        $ical = new ICal($ics);
+        $now = (new \DateTimeImmutable())->setTime(0, 0, 0);
+        $startDiff = $start->diff($now);
+        $endDiff = $now->diff($end);
+        // https://github.com/u01jmg3/ics-parser#ical-api
+        $ical = new ICal($ics, [
+            'filterDaysBefore' => max(0, ($startDiff->days + 1) * ($startDiff->invert ? -1 : 1)),
+            'filterDaysAfter' => max(0, ($endDiff->days + 1) * ($endDiff->invert ? -1 : 1)),
+        ]);
 
         return array_values(
             array_filter(
