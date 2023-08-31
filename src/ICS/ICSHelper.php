@@ -140,16 +140,45 @@ final class ICSHelper
 
         return array_values(
             array_filter(
-                array_map(
-                    static fn (IcalEvent $icalEvent) => new Event($icalEvent),
-                    $ical->eventsFromRange(
-                        $start->format(\DateTime::ATOM),
-                        $end->format(\DateTime::ATOM)
-                    ),
+                array_merge(
+                    ...array_map(
+                        $this->createEvents(...),
+                        $ical->eventsFromRange(
+                            $start->format(\DateTime::ATOM),
+                            $end->format(\DateTime::ATOM)
+                        )
+                    )
                 ),
                 fn (Event $event) => in_array($event->getBusyStatus(), $busyStatuses)
                     && $event->getDuration() > $minDuration
             )
+        );
+    }
+
+    /**
+     * @return Event[]
+     */
+    private function createEvents(IcalEvent $icalEvent): array
+    {
+        $event = new Event($icalEvent);
+        // Split into days
+        $start = $event->getStartTime();
+        $end = $event->getEndTime();
+        $ranges = [];
+        while ($start->format(self::DATE_FORMAT) < $end->format(self::DATE_FORMAT)) {
+            $nextDay = new \DateTimeImmutable(sprintf('%s tomorrow', $start->format(self::DATE_FORMAT)));
+            $ranges[] = [$start, $nextDay];
+            $start = $nextDay;
+        }
+        if ($start < $end) {
+            $ranges[] = [$start, $end];
+        }
+
+        return array_map(
+            static fn (array $range) => (clone $event)
+                ->setStartTime($range[0])
+                ->setEndTime($range[1]),
+            $ranges
         );
     }
 

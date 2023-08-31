@@ -6,7 +6,8 @@ use ICal\Event as IcalEvent;
 
 class Event
 {
-    private const MICROSOFT_TRUE = 'TRUE';
+    private ?\DateTimeImmutable $startTime = null;
+    private ?\DateTimeImmutable $endTime = null;
 
     public function __construct(
         private readonly IcalEvent $event
@@ -23,16 +24,30 @@ class Event
         return $this->event->summary;
     }
 
-    public function getStartTime(): \DateTimeInterface
+    public function getStartTime(): \DateTimeImmutable
     {
-        return new \DateTimeImmutable($this->event->dtstart);
+        return $this->startTime ?? new \DateTimeImmutable($this->event->dtstart);
     }
 
-    public function getEndTime(): \DateTimeInterface
+    public function setStartTime(?\DateTimeImmutable $startTime): self
     {
-        return $this->event->dtend
+        $this->startTime = $startTime;
+
+        return $this;
+    }
+
+    public function getEndTime(): \DateTimeImmutable
+    {
+        return $this->endTime ?? ($this->event->dtend
             ? new \DateTimeImmutable($this->event->dtend)
-            : new \DateTimeImmutable($this->getStartTime()->format(\DateTimeImmutable::ATOM).' tomorrow');
+            : new \DateTimeImmutable($this->getStartTime()->format(\DateTimeImmutable::ATOM).' tomorrow'));
+    }
+
+    public function setEndTime(?\DateTimeImmutable $endTime): self
+    {
+        $this->endTime = $endTime;
+
+        return $this;
     }
 
     public function getBusyStatus(): BusyStatus
