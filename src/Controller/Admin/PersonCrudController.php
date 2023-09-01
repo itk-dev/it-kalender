@@ -30,11 +30,16 @@ class PersonCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         yield TextField::new('name', new TranslatableMessage('Name'));
-        yield UrlField::new('icsUrl', new TranslatableMessage('ICS URL'));
+        yield UrlField::new('icsUrl', new TranslatableMessage('ICS URL'))
+            ->setFormTypeOption('help',
+                new TranslatableMessage('See <a href="https://github.com/itk-dev/it-kalender/blob/develop/docs/UserGuide.md#getting-ics-url">Getting ICS URL</a> for details on how to get this.')
+            )
+        ;
         yield AssociationField::new('calendars', new TranslatableMessage('Calendars'))
             ->hideOnForm();
 
         yield DateTimeField::new('icsReadAt', new TranslatableMessage('ICS read at'))
+            ->hideWhenCreating()
             ->setFormTypeOption('disabled', 'disabled')
         ;
         yield DateTimeField::new('createdAt', new TranslatableMessage('Created at'))

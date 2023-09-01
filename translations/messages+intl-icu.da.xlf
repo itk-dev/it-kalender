@@ -73,6 +73,10 @@
         <source>Person</source>
         <target state="translated">Person</target>
       </trans-unit>
+      <trans-unit id="1UDlLv1" resname="See &lt;a href=&quot;https://github.com/itk-dev/it-kalender/blob/develop/docs/UserGuide.md#getting-ics-url&quot;&gt;Getting ICS URL&lt;/a&gt; for details on how to get this.">
+        <source>See &lt;a href="https://github.com/itk-dev/it-kalender/blob/develop/docs/UserGuide.md#getting-ics-url"&gt;Getting ICS URL&lt;/a&gt; for details on how to get this.</source>
+        <target state="translated"><![CDATA[Se <a href="https://github.com/itk-dev/it-kalender/blob/develop/docs/UserGuide.md#getting-ics-url">Getting ICS URL</a> for detaljer om hvordan man får fat i denne.]]></target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
