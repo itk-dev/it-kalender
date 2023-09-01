@@ -34,14 +34,16 @@ final class ICSHelper
         $this->entityManager->flush();
     }
 
-    public function getCalendarData(Calendar $calendar, \DateTimeImmutable $now = new \DateTimeImmutable()): array
+    public function getCalendarData(Calendar $calendar, \DateTimeImmutable $now = new \DateTimeImmutable(), int $days = 5): array
     {
         $dates = [];
 
         $startDate = null;
         $endDate = null;
         $index = 0;
-        while (count($dates) < 5) {
+
+        $days = min($days, 14);
+        while (count($dates) < $days) {
             $date = new \DateTimeImmutable(sprintf('%s midnight + %d days', $now->format(\DateTimeImmutable::ATOM), $index));
 
             // Skip Saturdays and Sundays

@@ -56,6 +56,8 @@ class CalendarController extends AbstractController
         } catch (\Throwable) {
         }
 
-        return $this->icsHelper->getCalendarData($calendar, now: $now);
+        $days = (int) ($request->get('days') ?? 5);
+
+        return $this->icsHelper->getCalendarData($calendar, now: $now, days: $days);
     }
 }

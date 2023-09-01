@@ -11,6 +11,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+* [PR-4](https://github.com/itk-dev/it-kalender/pull/4):
+  Added days option.
 * [PR-3](https://github.com/itk-dev/it-kalender/pull/3):
   Added calendar view refresh option.
 
