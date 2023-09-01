@@ -17,11 +17,11 @@
     <div class="container-fluid bg-light h-100">
         <header>
             <div class="row bg-white">
-                <div class="col-md-3 bg-dark text-white px-3 pt-3">
+                <div class="col col-md-3 bg-dark text-white px-3 pt-3">
                     <span class="text-primary small">{{ 'Presence'|trans }}</span>
                     <h1>{{ calendar.name }}</h1>
                 </div>
-                <div class="col d-flex justify-content-center align-items-center">
+                <div class="col d-none d-md-flex justify-content-center align-items-center">
                     <div class="d-flex column-gap-5">
                         <div class="d-flex column-gap-2">
                             <span class="bg-primary d-inline-block" style="width: 20px; height: 20px;"></span> {{ 'Working elsewhere'|trans }}
@@ -31,7 +31,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-auto ms-auto d-flex justify-content-center align-items-center">
+                <div class="col ms-auto d-none d-md-flex justify-content-center align-items-center">
                     <div class="logo">
                         <img src="{{ vich_uploader_asset(calendar, 'logoFile') }}" alt="{{ title }}"/>
                     </div>
@@ -40,7 +40,7 @@
         </header>
         <main>
             <div class="row bg-white">
-                <div class="col-md-3 bg-dark text-white border-bottom border-color-white px-3 pt-3">
+                <div class="col-4 col-md-3 bg-dark text-white border-bottom border-color-white px-3 pt-3">
                     <span class="text-primary small">{{ 'Week'|trans }}</span>
                     <h2>{{ dates|first|format_datetime(pattern='ww') }}</h2>
                 </div>
@@ -49,7 +49,7 @@
 
                     <div class="row">
                         {% for date in dates %}
-                            <div class="col border-bottom border-end p-3 {{ loop.first ? 'bg-white' : 'bg-light' }}">
+                            <div class="col border-bottom border-end p-3 d-md-block {{ loop.first ? 'bg-white d-block' : 'bg-light d-none' }}">
                                 {# https://unicode-org.github.io/icu/userguide/format_parse/datetime/#datetime-format-syntax #}
                                 <h2 class="text-primary">{{ date|format_datetime(pattern='dd') }}</h2>
                                 {{ date|format_datetime(pattern='EEEE') }}
@@ -65,10 +65,10 @@
 
                 {% for name, items in people %}
                     <div class="row">
-                        <div class="col-md-3 bg-dark text-white border-bottom border-color-white py-2">{{ name }}</div>
+                        <div class="col-4 col-md-3 bg-dark text-white border-bottom border-color-white py-2">{{ name }}</div>
                         {% for date in dates %}
                             {% apply spaceless %}
-                            <div class="slot col border-bottom border-end {{ loop.first ? 'bg-white' : 'bg-light' }}">
+                            <div class="slot col border-bottom border-end d-md-block {{ loop.first ? 'bg-white d-block' : 'bg-light d-none' }}">
                                 {% if items[date] is defined %}
                                         {% for item in items[date] %}
                                             <div class="slot-blob {{ item.type|lower }}"
@@ -83,6 +83,22 @@
                     </div>
                 {% endfor %}
             </div>
+            <div class="col d-flex d-md-none justify-content-center align-items-center">
+                <div class="d-flex flex-column column-gap-5 my-3">
+                    <div class="d-flex column-gap-2">
+                        <span class="bg-primary d-inline-block" style="width: 20px; height: 20px;"></span> {{ 'Working elsewhere'|trans }}
+                    </div>
+                    <div class="d-flex column-gap-2">
+                        <span class="bg-secondary d-inline-block" style="width: 20px; height: 20px;"></span> {{ 'Out of office'|trans }}
+                    </div>
+                </div>
+            </div>
+            <div class="col ms-auto d-flex d-md-none justify-content-center align-items-center">
+                <div class="logo">
+                    <img src="{{ vich_uploader_asset(calendar, 'logoFile') }}" alt="{{ title }}"/>
+                </div>
+            </div>
+
         </main>
     </div>
 {% endblock %}
