@@ -9,6 +9,11 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+* [PR-3](https://github.com/itk-dev/it-kalender/pull/3):
+  Added calendar view refresh option.
+
 ## [1.0.0] - 2023-09-01
 
 [Unreleased]: https://github.com/itk-dev/it-kalender/compare/v1.0.0...HEAD

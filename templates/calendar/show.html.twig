@@ -4,6 +4,9 @@
 
 {% block meta %}
     <title>{{ 'Presence'|trans }} – {{ calendar.name }}</title>
+    {% if refresh_interval is defined %}
+        <meta http-equiv="refresh" content="{{ refresh_interval }}">
+    {% endif %}
 {% endblock %}
 
 {% block styles %}
