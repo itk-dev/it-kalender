@@ -32,7 +32,9 @@ class PersonCrudController extends AbstractCrudController
         yield TextField::new('name', new TranslatableMessage('Name'));
         yield UrlField::new('icsUrl', new TranslatableMessage('ICS URL'))
             ->setFormTypeOption('help',
-                new TranslatableMessage('See <a href="https://github.com/itk-dev/it-kalender/blob/develop/docs/UserGuide.md#getting-ics-url">Getting ICS URL</a> for details on how to get this.')
+                new TranslatableMessage('See <a href="{url}">Getting ICS URL</a> for details on how to get this.', [
+                    '{url}' => $this->getParameter('url_getting_ics_url'),
+                ])
             )
         ;
         yield AssociationField::new('calendars', new TranslatableMessage('Calendars'))
