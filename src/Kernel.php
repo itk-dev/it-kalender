@@ -13,7 +13,8 @@ class Kernel extends BaseKernel
     {
         parent::__construct($environment, $debug);
 
-        // Force the timezone to be UTC.
-        date_default_timezone_set('UTC');
+        if (isset($_ENV['DEFAULT_TIMEZONE'])) {
+            date_default_timezone_set($_ENV['DEFAULT_TIMEZONE']);
+        }
     }
 }
