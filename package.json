@@ -1,0 +1,43 @@
+{
+    "devDependencies": {
+        "@babel/core": "^7.17.0",
+        "@babel/preset-env": "^7.16.0",
+        "@symfony/webpack-encore": "^4.0.0",
+        "bootstrap": "^5.3.1",
+        "core-js": "^3.23.0",
+        "eslint": "^8.47.0",
+        "eslint-config-standard": "^17.1.0",
+        "eslint-plugin-import": "^2.28.1",
+        "eslint-plugin-n": "^16.0.2",
+        "eslint-plugin-promise": "^6.1.1",
+        "markdownlint-cli": "^0.35.0",
+        "regenerator-runtime": "^0.13.9",
+        "sass": "^1.66.1",
+        "sass-loader": "^13.0.0",
+        "stylelint": "^15.10.3",
+        "stylelint-config-sass-guidelines": "^10.0.0",
+        "stylelint-scss": "^5.1.0",
+        "webpack": "^5.74.0",
+        "webpack-cli": "^4.10.0",
+        "webpack-notifier": "^1.15.0"
+    },
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress",
+        "coding-standards-check/markdownlint": "markdownlint --ignore LICENSE.md '*.md' docs/",
+        "coding-standards-check/stylelint": "stylelint --config=.stylelintrc.js 'assets/**/*.scss'",
+        "coding-standards-check/scss": "yarn run coding-standards-check/stylelint",
+        "coding-standards-check/eslint": "eslint --config .eslintrc.js 'assets/**/*.js'",
+        "coding-standards-check/js": "yarn run coding-standards-check/eslint",
+        "coding-standards-check": "yarn run coding-standards-check/scss; yarn run coding-standards-check/js; yarn run coding-standards-check/markdownlint",
+        "coding-standards-apply/stylelint": "stylelint --config=.stylelintrc.js 'assets/**/*.scss' --fix",
+        "coding-standards-apply/scss": "yarn run coding-standards-apply/stylelint",
+        "coding-standards-apply/eslint": "eslint --config .eslintrc.js 'assets/**/*.js' --fix",
+        "coding-standards-apply/js": "yarn run coding-standards-apply/eslint",
+        "coding-standards-apply": "yarn run coding-standards-apply/scss; yarn run coding-standards-apply/js"
+    }
+}

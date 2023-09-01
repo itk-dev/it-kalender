@@ -1,4 +1,6 @@
 {
+    "name": "itk-dev/it-kalender",
+    "description": "It Kalender",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
@@ -7,14 +9,25 @@
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "doctrine/doctrine-migrations-bundle": "^3.2",
+        "easycorp/easyadmin-bundle": "^4.7",
+        "johngrogg/ics-parser": "^3.2.1",
+        "stof/doctrine-extensions-bundle": "^1.8",
         "symfony/console": "6.3.*",
         "symfony/dotenv": "6.3.*",
-        "symfony/flex": "^2",
+        "symfony/flex": "^2.3.3",
         "symfony/framework-bundle": "6.3.*",
+        "symfony/options-resolver": "6.3.*",
         "symfony/runtime": "6.3.*",
-        "symfony/yaml": "6.3.*"
-    },
-    "require-dev": {
+        "symfony/translation": "6.3.*",
+        "symfony/twig-bundle": "6.3.*",
+        "symfony/uid": "6.3.*",
+        "symfony/validator": "6.3.*",
+        "symfony/webpack-encore-bundle": "^2.0.1",
+        "symfony/yaml": "6.3.*",
+        "twig/extra-bundle": "^3.7",
+        "twig/intl-extra": "^3.7",
+        "vich/uploader-bundle": "^2.2"
     },
     "config": {
         "allow-plugins": {
@@ -53,6 +66,33 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+         "coding-standards-check/php-cs-fixer": [
+            "php-cs-fixer fix --dry-run"
+        ],
+        "coding-standards-check/twigcs": [
+            "twigcs templates"
+        ],
+        "coding-standards-check": [
+            "@coding-standards-check/php-cs-fixer",
+            "@coding-standards-check/twigcs"
+        ],
+        "coding-standards-apply/php-cs-fixer": [
+            "php-cs-fixer fix"
+        ],
+        "coding-standards-apply": [
+            "@coding-standards-apply/php-cs-fixer"
+        ],
+        "fixtures:load": [
+            "bin/console doctrine:fixtures:load --no-interaction",
+            "bin/console app:read-ics"
+        ],
+        "update-translations": [
+            "# We need a translation from en to en (!) (without prefix) to be able to process placeholders in en.",
+            "DEFAULT_LOCALE=en bin/console translation:extract --clean --force en --prefix=''",
+            "DEFAULT_LOCALE=en bin/console translation:extract --clean --force da",
+            "# Mark default translations (prefixed with `__`) as “Needs work” in Danish translations",
+            "sed --in-place='' 's/<target>__/<target state=\"needs-l10n\">__/' translations/*.da.*xlf"
         ]
     },
     "conflict": {
@@ -60,8 +100,19 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": true,
             "require": "6.3.*"
         }
+    },
+    "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "friendsofphp/php-cs-fixer": "^3.23",
+        "friendsoftwig/twigcs": "^6.2",
+        "phpunit/phpunit": "^9.6.11",
+        "spatie/icalendar-generator": "^2.5.6",
+        "symfony/browser-kit": "6.3.*",
+        "symfony/css-selector": "6.3.*",
+        "symfony/maker-bundle": "^1.50",
+        "symfony/phpunit-bridge": "^6.3.2"
     }
 }

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="3NHVIj9" resname="Name">
+        <source>Name</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="0VOH7Mb" resname="Slug">
+        <source>Slug</source>
+        <target>Slug</target>
+      </trans-unit>
+      <trans-unit id="fbIIlwU" resname="People">
+        <source>People</source>
+        <target>People</target>
+      </trans-unit>
+      <trans-unit id="d1tb_WR" resname="Created at">
+        <source>Created at</source>
+        <target>Created at</target>
+      </trans-unit>
+      <trans-unit id="PCEFPeg" resname="Updated at">
+        <source>Updated at</source>
+        <target>Updated at</target>
+      </trans-unit>
+      <trans-unit id="bz0ybUl" resname="ICS URL">
+        <source>ICS URL</source>
+        <target>ICS URL</target>
+      </trans-unit>
+      <trans-unit id="4LKwDPM" resname="Calendars">
+        <source>Calendars</source>
+        <target>Calendars</target>
+      </trans-unit>
+      <trans-unit id="vpcNzOk" resname="ICS read at">
+        <source>ICS read at</source>
+        <target>ICS read at</target>
+      </trans-unit>
+      <trans-unit id="1rPoyCj" resname="Presence">
+        <source>Presence</source>
+        <target>Presence</target>
+      </trans-unit>
+      <trans-unit id="tA.IcUk" resname="Choose your calendar">
+        <source>Choose your calendar</source>
+        <target>Choose your calendar</target>
+      </trans-unit>
+      <trans-unit id="vJhvQ9i" resname="Working elsewhere">
+        <source>Working elsewhere</source>
+        <target>Working elsewhere</target>
+      </trans-unit>
+      <trans-unit id="lRdbZtu" resname="Out of office">
+        <source>Out of office</source>
+        <target>Out of office</target>
+      </trans-unit>
+      <trans-unit id="54BBq1G" resname="Week">
+        <source>Week</source>
+        <target>Week</target>
+      </trans-unit>
+      <trans-unit id="1dCjC1F" resname="Calendar">
+        <source>Calendar</source>
+        <target>Calendar</target>
+      </trans-unit>
+      <trans-unit id="6GlQQWd" resname="Logo file">
+        <source>Logo file</source>
+        <target>Logo file</target>
+      </trans-unit>
+      <trans-unit id="1wfcLxk" resname="Logo">
+        <source>Logo</source>
+        <target>Logo</target>
+      </trans-unit>
+      <trans-unit id="YAfbY_G" resname="Person">
+        <source>Person</source>
+        <target>Person</target>
+      </trans-unit>
+      <trans-unit id="1UDlLv1" resname="See &lt;a href=&quot;https://github.com/itk-dev/it-kalender/blob/develop/docs/UserGuide.md#getting-ics-url&quot;&gt;Getting ICS URL&lt;/a&gt; for details on how to get this.">
+        <source>See &lt;a href="https://github.com/itk-dev/it-kalender/blob/develop/docs/UserGuide.md#getting-ics-url"&gt;Getting ICS URL&lt;/a&gt; for details on how to get this.</source>
+        <target><![CDATA[See <a href="https://github.com/itk-dev/it-kalender/blob/develop/docs/UserGuide.md#getting-ics-url">Getting ICS URL</a> for details on how to get this.]]></target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
