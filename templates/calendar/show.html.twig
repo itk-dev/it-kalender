@@ -49,7 +49,7 @@
 
                     <div class="row">
                         {% for date in dates %}
-                            <div class="col border-bottom border-end p-3 d-md-block {{ loop.first ? 'bg-white d-block' : 'bg-light d-none' }}">
+                            <div class="col border-bottom border-end p-3 d-md-block {{ loop.first ? 'bg-white' : 'bg-light' }} {{ loop.index <= 2 ? 'd-block' : 'd-none' }}">
                                 {# https://unicode-org.github.io/icu/userguide/format_parse/datetime/#datetime-format-syntax #}
                                 <h2 class="text-primary">{{ date|format_datetime(pattern='dd') }}</h2>
                                 {{ date|format_datetime(pattern='EEEE') }}
@@ -68,7 +68,7 @@
                         <div class="col-4 col-md-3 bg-dark text-white border-bottom border-color-white py-2">{{ name }}</div>
                         {% for date in dates %}
                             {% apply spaceless %}
-                            <div class="slot col border-bottom border-end d-md-block {{ loop.first ? 'bg-white d-block' : 'bg-light d-none' }}">
+                            <div class="slot col border-bottom border-end d-md-block {{ loop.first ? 'bg-white' : 'bg-light' }} {{ loop.index <= 2 ? 'd-block' : 'd-none' }}">
                                 {% if items[date] is defined %}
                                         {% for item in items[date] %}
                                             <div class="slot-blob {{ item.type|lower }}"
