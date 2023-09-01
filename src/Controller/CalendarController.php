@@ -34,6 +34,11 @@ class CalendarController extends AbstractController
         $parameters = $this->getData($request, $calendar);
         $parameters['calendar'] = $calendar;
 
+        $refreshInterval = (int) ($request->get('refresh') ?? 0);
+        if ($refreshInterval > 0) {
+            $parameters['refresh_interval'] = $refreshInterval;
+        }
+
         return $this->render('calendar/show.html.twig', $parameters);
     }
 

@@ -25,3 +25,8 @@ Set up a cron job to read all ICS data regularly:
 ```sh
 0 * * * * docker compose --env-file .env.docker.local --file docker-compose.server.yml exec phpfpm bin/console app:read-ics
 ```
+
+## Automatically refresh calendar view
+
+Add `refresh=«seconds»` to a calendar view URL to fresh the view automatically
+every «seconds» seconds, e.g. `http://localhost/test?refresh=900`.
