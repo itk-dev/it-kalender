@@ -67,22 +67,33 @@ class PersonCrudController extends AbstractCrudController
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
         parent::persistEntity($entityManager, $entityInstance);
+
+        assert($entityInstance instanceof Person);
+        $this->addFlash('success', new TranslatableMessage('Person {name} created', ['name' => $entityInstance->getName()]));
+
         $this->readICS($entityInstance);
     }
 
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
         parent::persistEntity($entityManager, $entityInstance);
+
+        assert($entityInstance instanceof Person);
+        $this->addFlash('success', new TranslatableMessage('Person {name} updated', ['name' => $entityInstance->getName()]));
+
         $this->readICS($entityInstance);
     }
 
     private function readICS(Person $person)
     {
         try {
-            $this->icsHelper->readICS($person);
-            $this->addFlash('success', sprintf('ICS for %s read at %s', $person->getName(), $person->getIcsReadAt()->format(\DateTimeImmutable::ATOM)));
+            if ($this->icsHelper->readICS($person)) {
+                $this->addFlash('success', new TranslatableMessage('ICS for {name} read at {read_at}', ['name' => $person->getName(), 'read_at' => $person->getIcsReadAt()->format(\DateTimeImmutable::ATOM)]));
+            } else {
+                $this->addFlash('warning', new TranslatableMessage('ICS for {name} not changed since last read at {read_at}', ['name' => $person->getName(), 'read_at' => $person->getIcsReadAt()->format(\DateTimeImmutable::ATOM)]));
+            }
         } catch (\Exception $exception) {
-            $this->addFlash('danger', sprintf('Error reading ICS for %s: %s', $person->getName(), $exception->getMessage()));
+            $this->addFlash('danger', new TranslatableMessage('Error reading ICS for {name}: {message}', ['name' => $person->getName(), 'message' => $exception->getMessage()]));
         }
     }
 }

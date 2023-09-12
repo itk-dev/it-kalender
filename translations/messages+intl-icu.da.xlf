@@ -81,6 +81,34 @@
         <source>Slug can contain only letters, digits and dashes (-).</source>
         <target state="translated">Den korte må kun indeholde bogstaver, tal og bindestreger (-).</target>
       </trans-unit>
+      <trans-unit id="aWoylqV" resname="Calendar {name} created">
+        <source>Calendar {name} created</source>
+        <target state="translated">Kalender {name} oprettet</target>
+      </trans-unit>
+      <trans-unit id="97vy25o" resname="Calendar {name} updated">
+        <source>Calendar {name} updated</source>
+        <target state="translated">Kalender {name} opdateret</target>
+      </trans-unit>
+      <trans-unit id="V60p76w" resname="Person {name} created">
+        <source>Person {name} created</source>
+        <target state="translated">Person {name} oprettet</target>
+      </trans-unit>
+      <trans-unit id="dPGVE7T" resname="Person {name} updated">
+        <source>Person {name} updated</source>
+        <target state="translated">Person {name} opdateret</target>
+      </trans-unit>
+      <trans-unit id="h1Exw7I" resname="ICS for {name} read at {read_at}">
+        <source>ICS for {name} read at {read_at}</source>
+        <target state="translated">ICS for {name} læst {read_at}</target>
+      </trans-unit>
+      <trans-unit id="nixBagq" resname="ICS for {name} not changed since last read at {read_at}">
+        <source>ICS for {name} not changed since last read at {read_at}</source>
+        <target state="translated">ICS for {name} ikke ændret siden sidst læst {read_at}</target>
+      </trans-unit>
+      <trans-unit id="HJZ2Sen" resname="Error reading ICS for {name}: {message}">
+        <source>Error reading ICS for {name}: {message}</source>
+        <target state="translated">Fejl under læsning af ICS for {name}: {message}</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

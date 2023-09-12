@@ -81,6 +81,34 @@
         <source>Slug can contain only letters, digits and dashes (-).</source>
         <target>Slug can contain only letters, digits and dashes (-).</target>
       </trans-unit>
+      <trans-unit id="aWoylqV" resname="Calendar {name} created">
+        <source>Calendar {name} created</source>
+        <target>Calendar {name} created</target>
+      </trans-unit>
+      <trans-unit id="97vy25o" resname="Calendar {name} updated">
+        <source>Calendar {name} updated</source>
+        <target>Calendar {name} updated</target>
+      </trans-unit>
+      <trans-unit id="V60p76w" resname="Person {name} created">
+        <source>Person {name} created</source>
+        <target>Person {name} created</target>
+      </trans-unit>
+      <trans-unit id="dPGVE7T" resname="Person {name} updated">
+        <source>Person {name} updated</source>
+        <target>Person {name} updated</target>
+      </trans-unit>
+      <trans-unit id="h1Exw7I" resname="ICS for {name} read at {read_at}">
+        <source>ICS for {name} read at {read_at}</source>
+        <target>ICS for {name} read at {read_at}</target>
+      </trans-unit>
+      <trans-unit id="nixBagq" resname="ICS for {name} not changed since last read at {read_at}">
+        <source>ICS for {name} not changed since last read at {read_at}</source>
+        <target>ICS for {name} not changed since last read at {read_at}</target>
+      </trans-unit>
+      <trans-unit id="HJZ2Sen" resname="Error reading ICS for {name}: {message}">
+        <source>Error reading ICS for {name}: {message}</source>
+        <target>Error reading ICS for {name}: {message}</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

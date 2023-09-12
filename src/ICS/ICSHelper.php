@@ -24,14 +24,28 @@ final class ICSHelper
     ) {
     }
 
-    public function readICS(Person $person)
+    public function readICS(Person $person): bool
     {
         $ics = file_get_contents($person->getIcsUrl());
-        $person
-            ->setIcs($ics)
-            ->setIcsReadAt(new \DateTimeImmutable());
-        $this->entityManager->persist($person);
-        $this->entityManager->flush();
+        if (0 !== $this->compareICS($ics, $person->getIcs())) {
+            $person
+                ->setIcs($ics)
+                ->setIcsReadAt(new \DateTimeImmutable());
+            $this->entityManager->persist($person);
+            $this->entityManager->flush();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private function compareICS(string $ics0, ?string $ics1): int
+    {
+        // Remove DTSTAMP (cf. https://www.kanzaki.com/docs/ical/dtstamp.html)
+        [$ics0, $ics1] = preg_replace('/^DTSTAMP:.+$/mi', '', [$ics0, $ics1]);
+
+        return $ics0 <=> $ics1;
     }
 
     public function getCalendarData(Calendar $calendar, \DateTimeImmutable $now = new \DateTimeImmutable(), int $days = 5): array
