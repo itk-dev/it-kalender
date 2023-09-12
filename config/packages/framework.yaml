@@ -18,6 +18,9 @@ framework:
     php_errors:
         log: true
 
+    # https://symfony.com/doc/6.2/the-fast-track/en/21-cache.html
+    http_cache: true
+
 when@test:
     framework:
         test: true

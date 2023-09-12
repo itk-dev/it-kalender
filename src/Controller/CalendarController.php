@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\Cache;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CalendarController extends AbstractController
@@ -19,6 +20,7 @@ class CalendarController extends AbstractController
     }
 
     #[Route('/', name: 'calendar_index')]
+    #[Cache(public: true, maxage: 60 * 60, mustRevalidate: true)]
     public function index(CalendarRepository $repository): Response
     {
         $calendars = $repository->findAll();
@@ -29,6 +31,7 @@ class CalendarController extends AbstractController
     }
 
     #[Route('/{slug}', name: 'calendar_show')]
+    #[Cache(public: true, maxage: 60 * 60, mustRevalidate: true)]
     public function show(Request $request, Calendar $calendar): Response
     {
         $parameters = $this->getData($request, $calendar);
