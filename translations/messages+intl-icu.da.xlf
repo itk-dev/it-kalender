@@ -77,6 +77,10 @@
         <source>See &lt;a href="{url}"&gt;Getting ICS URL&lt;/a&gt; for details on how to get this.</source>
         <target state="translated"><![CDATA[Se <a href="{url}">Getting ICS URL</a> for detaljer om hvordan man får fat i denne.]]></target>
       </trans-unit>
+      <trans-unit id="s6jtOEp" resname="Slug can contain only letters, digits and dashes (-).">
+        <source>Slug can contain only letters, digits and dashes (-).</source>
+        <target state="translated">Den korte må kun indeholde bogstaver, tal og bindestreger (-).</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

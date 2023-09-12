@@ -77,6 +77,10 @@
         <source>See &lt;a href="{url}"&gt;Getting ICS URL&lt;/a&gt; for details on how to get this.</source>
         <target><![CDATA[See <a href="{url}">Getting ICS URL</a> for details on how to get this.]]></target>
       </trans-unit>
+      <trans-unit id="s6jtOEp" resname="Slug can contain only letters, digits and dashes (-).">
+        <source>Slug can contain only letters, digits and dashes (-).</source>
+        <target>Slug can contain only letters, digits and dashes (-).</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

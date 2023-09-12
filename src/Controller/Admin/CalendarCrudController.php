@@ -24,7 +24,8 @@ class CalendarCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         yield TextField::new('name', new TranslatableMessage('Name'));
-        yield TextField::new('slug', new TranslatableMessage('Slug'));
+        yield TextField::new('slug', new TranslatableMessage('Slug'))
+            ->setHelp(new TranslatableMessage('Slug can contain only letters, digits and dashes (-).'));
 
         if (in_array($pageName, [Crud::PAGE_NEW, Crud::PAGE_EDIT], true)) {
             $entity = $this->getContext()->getEntity()->getInstance();
@@ -63,8 +64,7 @@ class CalendarCrudController extends AbstractCrudController
                         'calendar_show', [
                             'slug' => $calendar->getSlug(),
                         ]
-                    )
-                    )
+                    ))
             );
     }
 }
