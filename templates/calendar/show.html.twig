@@ -65,7 +65,7 @@
 
                 {% for name, items in people %}
                     <div class="row">
-                        <div class="col-4 col-md-3 bg-dark text-white border-bottom border-color-white py-2">{{ name }}</div>
+                        <div class="col-4 col-md-3 bg-dark text-white border-bottom border-color-white py-2 text-truncate">{{ name }}</div>
                         {% for date in dates %}
                             {% apply spaceless %}
                             <div class="slot col border-bottom border-end d-md-block {{ loop.first ? 'bg-white' : 'bg-light' }} {{ loop.index <= 2 ? 'd-block' : 'd-none' }}">

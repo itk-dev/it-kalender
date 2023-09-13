@@ -42,7 +42,7 @@ class PersonFixture extends Fixture
         $manager->persist($person);
 
         $person = new Person();
-        $person->setName('Person 1');
+        $person->setName('Elvis Aron Presley');
         $ics = Calendar::create($person->getName())
             ->event(Event::create('Test event')
                 ->startsAt(new \DateTimeImmutable('2001-01-01 12:00:00'))
