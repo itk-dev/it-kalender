@@ -151,8 +151,10 @@ final class ICSHelper
         $endDiff = $now->diff($end);
         // https://github.com/u01jmg3/ics-parser#ical-api
         $ical = new ICal($ics, [
-            'filterDaysBefore' => max(0, ($startDiff->days + 1) * ($startDiff->invert ? -1 : 1)),
-            'filterDaysAfter' => max(0, ($endDiff->days + 1) * ($endDiff->invert ? -1 : 1)),
+            // Look 4 weeks into the past …
+            'filterDaysBefore' => max(0, ($startDiff->days + 4 * 7) * ($startDiff->invert ? -1 : 1)),
+            // … and 2 weeks into the future.
+            'filterDaysAfter' => max(0, ($endDiff->days + 2 * 7) * ($endDiff->invert ? -1 : 1)),
         ]);
 
         return array_values(
