@@ -94,18 +94,17 @@ final class ICSHelper
     public function roundTimes(Event $event): array
     {
         $getHours = static fn (\DateTimeInterface $time) => (int) $time->format('H');
-        $setHours = function (\DateTimeInterface $time, int $hours): \DateTimeInterface {
-            return \DateTimeImmutable::createFromInterface($time)->setTime($hours, 0);
-        };
+        $setHours = static fn (\DateTimeInterface $time, int $hours) => \DateTimeImmutable::createFromInterface($time)->setTime($hours, 0);
 
-        $roundHours = function (\DateTimeInterface $time) use ($setHours) {
+        $stuff = 4;
+
+        $roundHours = static function (\DateTimeInterface $time) use ($setHours, $stuff) {
             $hours = (int) $time->format('H');
             // Hours must not be less than 8.
             $hours = max($hours, 8);
             // Hours must not be more than 16.
             $hours = min($hours, 16);
             // Round to nearest multiple of 4 (cf. https://stackoverflow.com/a/4133886)
-            $stuff = 4;
             $hours = (int) (round($hours / $stuff) * $stuff);
 
             return $setHours($time, $hours);
@@ -127,7 +126,17 @@ final class ICSHelper
             $end = $setHours($end, 16);
         }
 
-        return [$roundHours($start), $roundHours($end)];
+        [$start, $end] = [$roundHours($start), $roundHours($end)];
+
+        if ($getHours($start) >= $getHours($end)) {
+            if ($getHours($start) > 12) {
+                $start = $setHours($start, $getHours($end) - $stuff);
+            } else {
+                $end = $setHours($end, $getHours($start) + $stuff);
+            }
+        }
+
+        return [$start, $end];
     }
 
     /**
