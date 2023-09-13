@@ -73,7 +73,7 @@
         <source>Person</source>
         <target state="translated">Person</target>
       </trans-unit>
-      <trans-unit id="fJnNC4Q" resname="See &lt;a href=&quot;{url}&quot;>Getting ICS URL&lt;/a> for details on how to get this.">
+      <trans-unit id="fJnNC4Q" resname="See &lt;a href=&quot;{url}&quot;&gt;Getting ICS URL&lt;/a&gt; for details on how to get this.">
         <source>See &lt;a href="{url}"&gt;Getting ICS URL&lt;/a&gt; for details on how to get this.</source>
         <target state="translated"><![CDATA[Se <a href="{url}">Getting ICS URL</a> for detaljer om hvordan man får fat i denne.]]></target>
       </trans-unit>
