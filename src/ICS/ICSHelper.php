@@ -150,7 +150,9 @@ final class ICSHelper
         $startDiff = $start->diff($now);
         $endDiff = $now->diff($end);
         // https://github.com/u01jmg3/ics-parser#ical-api
+        $ical = new ICal($ics);
         $ical = new ICal($ics, [
+            'defaultTimeZone' => $ical->calendarTimeZone(),
             // Look 4 weeks into the past …
             'filterDaysBefore' => max(0, ($startDiff->days + 4 * 7) * ($startDiff->invert ? -1 : 1)),
             // … and 2 weeks into the future.
