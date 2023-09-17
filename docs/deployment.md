@@ -20,10 +20,10 @@ docker compose run --rm node yarn build
 
 ## Cron job
 
-Set up a cron job to read all ICS data regularly and flush the cache:
+Set up a cron job to read all ICS data regularly and refresh the calendars:
 
 ```sh
-0 * * * * docker compose --env-file .env.docker.local --file docker-compose.server.yml exec phpfpm bin/console app:read-ics; docker compose --env-file .env.docker.local --file docker-compose.server.yml exec phpfpm bin/console cache:clear
+0 * * * * docker compose --env-file .env.docker.local --file docker-compose.server.yml exec phpfpm bin/console app:read-ics --refresh-calendars
 ```
 
 ## Calender view parameters
