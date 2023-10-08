@@ -24,3 +24,11 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Controller\CalendarController:
+        arguments:
+            $options:
+                cache_options:
+                    # https://symfony.com/doc/current/http_cache.html#expiration-caching
+                    public: true
+                    max_age: '%env(int:CALENDER_CACHE_MAX_AGE)%'
+                    must_revalidate: true
