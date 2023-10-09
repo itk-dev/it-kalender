@@ -14,18 +14,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class CalendarController extends AbstractController
 {
     public function __construct(
-        private readonly ICSHelper $icsHelper
+        private readonly ICSHelper $icsHelper,
+        private readonly array $options
     ) {
     }
 
     #[Route('/', name: 'calendar_index')]
     public function index(CalendarRepository $repository): Response
     {
-        $calendars = $repository->findAll();
+        $parameters['calendars'] = $repository->findAll();
 
-        return $this->render('calendar/index.html.twig', [
-            'calendars' => $calendars,
-        ]);
+        return $this
+            ->render('calendar/index.html.twig', $parameters)
+            ->setCache($this->options['cache_options'] ?? []);
     }
 
     #[Route('/{slug}', name: 'calendar_show')]
@@ -39,13 +40,15 @@ class CalendarController extends AbstractController
             $parameters['refresh_interval'] = $refreshInterval;
         }
 
-        return $this->render('calendar/show.html.twig', $parameters);
+        return $this->render('calendar/show.html.twig', $parameters)
+            ->setCache($this->options['cache_options'] ?? []);
     }
 
     #[Route('/data/{slug}', name: 'app_data')]
     public function data(Request $request, Calendar $calendar): JsonResponse
     {
-        return new JsonResponse($this->getData($request, $calendar));
+        return (new JsonResponse($this->getData($request, $calendar)))
+            ->setCache($this->options['cache_options'] ?? []);
     }
 
     private function getData(Request $request, Calendar $calendar): array

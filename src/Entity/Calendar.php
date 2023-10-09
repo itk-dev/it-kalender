@@ -34,6 +34,7 @@ class Calendar
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank]
+    #[Assert\Regex(pattern: '@^[[:alnum:]-]+$@i')]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255, nullable: true)]

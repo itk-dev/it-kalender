@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\EasyAdminHelper;
 use App\Entity\Calendar;
 use App\Field\VichImageField;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -24,7 +25,8 @@ class CalendarCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         yield TextField::new('name', new TranslatableMessage('Name'));
-        yield TextField::new('slug', new TranslatableMessage('Slug'));
+        yield TextField::new('slug', new TranslatableMessage('Slug'))
+            ->setHelp(new TranslatableMessage('Slug can contain only letters, digits and dashes (-).'));
 
         if (in_array($pageName, [Crud::PAGE_NEW, Crud::PAGE_EDIT], true)) {
             $entity = $this->getContext()->getEntity()->getInstance();
@@ -63,8 +65,23 @@ class CalendarCrudController extends AbstractCrudController
                         'calendar_show', [
                             'slug' => $calendar->getSlug(),
                         ]
-                    )
-                    )
+                    ))
             );
+    }
+
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        parent::persistEntity($entityManager, $entityInstance);
+
+        assert($entityInstance instanceof Calendar);
+        $this->addFlash('success', new TranslatableMessage('Calendar {name} created', ['name' => $entityInstance->getName()]));
+    }
+
+    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        parent::persistEntity($entityManager, $entityInstance);
+
+        assert($entityInstance instanceof Calendar);
+        $this->addFlash('success', new TranslatableMessage('Calendar {name} updated', ['name' => $entityInstance->getName()]));
     }
 }

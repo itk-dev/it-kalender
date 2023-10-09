@@ -3,9 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta data-generated-at="{{ 'now'|date(constant('DateTimeInterface::ATOM')) }}"/>
     {% block meta %}{% endblock %}
-    {{ encore_entry_link_tags('app') }}
-    {% block styles %}{% endblock %}
+    {% block styles %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
   </head>
   <body>
     {% block body %}{% endblock %}
