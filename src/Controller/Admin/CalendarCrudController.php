@@ -51,7 +51,8 @@ class CalendarCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular(new TranslatableMessage('Calendar'))
             ->setEntityLabelInPlural(new TranslatableMessage('Calendars'))
-            ->showEntityActionsInlined();
+            ->showEntityActionsInlined()
+            ->setSearchFields(['name', 'slug']);
     }
 
     public function configureActions(Actions $actions): Actions

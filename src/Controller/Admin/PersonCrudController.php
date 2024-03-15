@@ -55,7 +55,8 @@ class PersonCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular(new TranslatableMessage('Person'))
             ->setEntityLabelInPlural(new TranslatableMessage('People'))
-            ->showEntityActionsInlined();
+            ->showEntityActionsInlined()
+            ->setSearchFields(['name']);
     }
 
     public function configureActions(Actions $actions): Actions
