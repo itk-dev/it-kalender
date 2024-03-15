@@ -125,6 +125,8 @@
         "symfony/browser-kit": "6.3.*",
         "symfony/css-selector": "6.3.*",
         "symfony/maker-bundle": "^1.50",
-        "symfony/phpunit-bridge": "^6.3.2"
+        "symfony/phpunit-bridge": "^6.3.2",
+        "symfony/stopwatch": "6.3.*",
+        "symfony/web-profiler-bundle": "6.3.*"
     }
 }
