@@ -1,0 +1,22 @@
+parameters:
+    level: 6
+    paths:
+        - bin/
+        - config/
+        - public/
+        - src/
+        - tests/
+
+    ignoreErrors:
+        - '#Method .+ has parameter .+ with no value type specified in iterable type array#'
+        - '#Method .+ return type has no value type specified in iterable type array.#'
+        # @TODO Clean this up
+        - '#Call to an undefined method Spatie\\IcalendarGenerator\\Components\\Component::fullDay\(\).#'
+        - '#Call to an undefined method Spatie\\IcalendarGenerator\\Components\\Component::repeatOn\(\).#'
+
+    checkGenericClassInNonGenericObjectType: false
+
+
+# Local Variables:
+# mode: yaml
+# End:

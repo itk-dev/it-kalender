@@ -64,7 +64,7 @@ class ReadIcsCommand extends Command
                     $this->httpClient->request('GET', $url)->getContent();
                     $end = microtime(true);
                     $logger->debug(sprintf('Elapsed time: %d ms', $end - $start));
-                } catch (\Exception $exception) {
+                } catch (\Exception) {
                     $logger->error(sprintf('Error refreshing calendar %s', $calendar->getName()));
                 }
             }

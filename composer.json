@@ -94,6 +94,15 @@
             "DEFAULT_LOCALE=en bin/console translation:extract --clean --force da",
             "# Mark default translations (prefixed with `__`) as “Needs work” in Danish translations",
             "sed --in-place='' 's/<target>__/<target state=\"needs-l10n\">__/' translations/*.da.*xlf"
+        ],
+        "code-analysis/phpstan": [
+            "phpstan analyse"
+        ],
+        "code-analysis": [
+            "@code-analysis/phpstan"
+        ],
+        "rector": [
+            "rector"
         ]
     },
     "conflict": {
@@ -109,7 +118,9 @@
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "friendsofphp/php-cs-fixer": "^3.23",
         "friendsoftwig/twigcs": "^6.2",
+        "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^9.6.11",
+        "rector/rector": "^1.0",
         "spatie/icalendar-generator": "^2.5.6",
         "symfony/browser-kit": "6.3.*",
         "symfony/css-selector": "6.3.*",

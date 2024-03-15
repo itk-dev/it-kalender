@@ -64,6 +64,9 @@ class PersonCrudController extends AbstractCrudController
             ->disable(Action::DELETE);
     }
 
+    /**
+     * @param Person $entityInstance
+     */
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
         parent::persistEntity($entityManager, $entityInstance);
@@ -74,6 +77,9 @@ class PersonCrudController extends AbstractCrudController
         $this->readICS($entityInstance);
     }
 
+    /**
+     * @param Person $entityInstance
+     */
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
         parent::persistEntity($entityManager, $entityInstance);
@@ -84,13 +90,15 @@ class PersonCrudController extends AbstractCrudController
         $this->readICS($entityInstance);
     }
 
-    private function readICS(Person $person)
+    private function readICS(Person $person): void
     {
         try {
             if ($this->icsHelper->readICS($person)) {
                 $this->addFlash('success', new TranslatableMessage('ICS for {name} read at {read_at}', ['name' => $person->getName(), 'read_at' => $person->getIcsReadAt()->format(\DateTimeImmutable::ATOM)]));
-            } else {
+            } elseif ($readAt = $person->getIcsReadAt()) {
                 $this->addFlash('warning', new TranslatableMessage('ICS for {name} not changed since last read at {read_at}', ['name' => $person->getName(), 'read_at' => $person->getIcsReadAt()->format(\DateTimeImmutable::ATOM)]));
+            } else {
+                $this->addFlash('warning', new TranslatableMessage('ICS for {name} not changed since last read', ['name' => $person->getName()]));
             }
         } catch (\Exception $exception) {
             $this->addFlash('danger', new TranslatableMessage('Error reading ICS for {name}: {message}', ['name' => $person->getName(), 'message' => $exception->getMessage()]));

@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraints\File;
 
 class EasyAdminHelper
 {
-    public static function getFileInputAttributes(object $entity, string $key)
+    public static function getFileInputAttributes(object $entity, string $key): array
     {
         $refl = new \ReflectionProperty($entity, $key);
         $attr = [];

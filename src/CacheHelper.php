@@ -10,7 +10,7 @@ class CacheHelper
 {
     public function __construct(
         private readonly StoreInterface $store,
-        private UrlGeneratorInterface $router
+        private readonly UrlGeneratorInterface $router
     ) {
     }
 

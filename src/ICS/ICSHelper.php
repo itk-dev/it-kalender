@@ -221,13 +221,13 @@ final class ICSHelper
 
     public function isAllDayEvent(IcalEvent $event): bool
     {
-        return self::MICROSOFT_TRUE === $event->x_microsoft_cdo_alldayevent;
+        return self::MICROSOFT_TRUE === ($event->x_microsoft_cdo_alldayevent ?? self::MICROSOFT_FALSE);
     }
 
     public function getBusyStatus(IcalEvent $event): BusyStatus
     {
-        $status = $event->x_microsoft_cdo_busystatus;
-
-        return BusyStatus::from($status);
+        return isset($event->x_microsoft_cdo_busystatus)
+            ? BusyStatus::from($event->x_microsoft_cdo_busystatus)
+            : BusyStatus::FREE;
     }
 }
