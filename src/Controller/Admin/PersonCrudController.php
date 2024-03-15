@@ -62,7 +62,12 @@ class PersonCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-            ->disable(Action::DELETE);
+            ->update(Crud::PAGE_INDEX, Action::DELETE, static function (Action $action): Action {
+                return $action->displayIf(static function (Person $person) {
+                    return $person->getCalendars()->isEmpty();
+                });
+            })
+            ->reorder(Crud::PAGE_INDEX, [Action::DELETE, Action::EDIT]);
     }
 
     /**

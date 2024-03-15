@@ -58,7 +58,6 @@ class CalendarCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-            ->disable(Action::DELETE)
             ->add(
                 Crud::PAGE_INDEX,
                 Action::new('show', 'Show')
@@ -67,7 +66,13 @@ class CalendarCrudController extends AbstractCrudController
                             'slug' => $calendar->getSlug(),
                         ]
                     ))
-            );
+            )
+            ->update(Crud::PAGE_INDEX, Action::DELETE, static function (Action $action): Action {
+                return $action->displayIf(static function (Calendar $person) {
+                    return $person->getPeople()->isEmpty();
+                });
+            })
+            ->reorder(Crud::PAGE_INDEX, [Action::DELETE, Action::EDIT]);
     }
 
     /**
