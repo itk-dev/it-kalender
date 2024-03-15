@@ -67,6 +67,7 @@ class CalendarCrudController extends AbstractCrudController
                         ]
                     ))
             )
+            ->remove(Crud::PAGE_INDEX, Action::BATCH_DELETE)
             ->update(Crud::PAGE_INDEX, Action::DELETE, static function (Action $action): Action {
                 return $action->displayIf(static function (Calendar $person) {
                     return $person->getPeople()->isEmpty();

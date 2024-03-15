@@ -5,11 +5,13 @@ namespace App\Entity;
 use App\Repository\PersonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PersonRepository::class)]
 class Person implements \Stringable
@@ -23,9 +25,12 @@ class Person implements \Stringable
     private ?Uuid $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Url]
+    #[Assert\Regex('/\.ics$/', message: 'ICS URL must end with .ics')]
     private ?string $icsUrl = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -38,6 +43,7 @@ class Person implements \Stringable
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Calendar>
      */
     #[ORM\ManyToMany(targetEntity: Calendar::class, mappedBy: 'people')]
+    #[ORM\OrderBy(['name' => Criteria::ASC])]
     private Collection $calendars;
 
     public function __construct()

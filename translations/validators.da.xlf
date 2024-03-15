@@ -9,6 +9,10 @@
         <source>Error</source>
         <target>Fejl</target>
       </trans-unit>
+      <trans-unit id="85aDg0J" resname="ICS URL must end with .ics">
+        <source>ICS URL must end with .ics</source>
+        <target state="translated">ICS-url skal slutte på .ics</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

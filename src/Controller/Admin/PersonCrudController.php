@@ -8,11 +8,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Option\TextAlign;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Translation\TranslatableMessage;
 
 class PersonCrudController extends AbstractCrudController
@@ -29,25 +31,36 @@ class PersonCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        yield TextField::new('name', new TranslatableMessage('Name'));
+        yield TextField::new('name', new TranslatableMessage('Name'))
+            ->addCssClass('align-text-top');
+
         yield UrlField::new('icsUrl', new TranslatableMessage('ICS URL'))
-            ->setFormTypeOption('help',
-                new TranslatableMessage('See <a href="{url}">Getting ICS URL</a> for details on how to get this.', [
+            ->setFormType(TextareaType::class)
+            ->setFormTypeOptions([
+                'help' => new TranslatableMessage('See <a href="{url}">Getting ICS URL</a> for details on how to get this.', [
                     '{url}' => $this->getParameter('url_getting_ics_url'),
-                ])
-            )
-        ;
+                ]),
+            ])
+            ->addCssClass('align-text-top');
+
         yield AssociationField::new('calendars', new TranslatableMessage('Calendars'))
-            ->hideOnForm();
+            ->setTemplatePath('admin/person/calendars.html.twig')
+            ->setTextAlign(TextAlign::LEFT)
+            ->hideOnForm()
+            ->addCssClass('align-text-top');
 
         yield DateTimeField::new('icsReadAt', new TranslatableMessage('ICS read at'))
             ->hideWhenCreating()
             ->setFormTypeOption('disabled', 'disabled')
-        ;
+            ->addCssClass('align-text-top');
+
         yield DateTimeField::new('createdAt', new TranslatableMessage('Created at'))
-            ->hideOnForm();
+            ->hideOnForm()
+            ->addCssClass('align-text-top');
+
         yield DateTimeField::new('updatedAt', new TranslatableMessage('Updated at'))
-            ->hideOnForm();
+            ->hideOnForm()
+            ->addCssClass('align-text-top');
     }
 
     public function configureCrud(Crud $crud): Crud
@@ -62,6 +75,7 @@ class PersonCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
+            ->remove(Crud::PAGE_INDEX, Action::BATCH_DELETE)
             ->update(Crud::PAGE_INDEX, Action::DELETE, static function (Action $action): Action {
                 return $action->displayIf(static function (Person $person) {
                     return $person->getCalendars()->isEmpty();

@@ -32,9 +32,12 @@
                     </div>
                 </div>
                 <div class="col ms-auto d-none d-md-flex justify-content-center align-items-center">
+                    {% set logo_url = vich_uploader_asset(calendar, 'logoFile') %}
+                    {% if logo_url is not empty %}
                     <div class="logo">
-                        <img src="{{ vich_uploader_asset(calendar, 'logoFile') }}" alt="{{ title }}"/>
+                        <img src="{{ logo_url }}" alt="{{ title }}"/>
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </header>

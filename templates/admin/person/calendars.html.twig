@@ -1,0 +1,15 @@
+{% if entity.instance.calendars is empty %}
+    {{ '–' }}
+{% else %}
+    <ul class="list-unstyled m-0">
+    {% for calendar in entity.instance.calendars %}
+        <li>
+        {# @var \App\Entity\Calendar calendar #}
+        {% set url = ea_url().setController('App\\Controller\\Admin\\CalendarCrudController').setAction('edit').setEntityId(calendar.id) %}
+        <a href="{{ url }}">
+            {{ calendar.name }}
+        </a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
