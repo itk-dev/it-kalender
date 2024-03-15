@@ -1,7 +1,7 @@
 on: pull_request
 name: Review
 jobs:
-    test-composer-files:
+    composer-validate:
         name: Validate composer
         runs-on: ubuntu-latest
         strategy:
@@ -12,6 +12,20 @@ jobs:
             - run: docker compose up --detach
             - name: Validate composer
               run: docker compose run --rm phpfpm composer validate
+
+    composer-normalize:
+        name: Normalize composer
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+        steps:
+            - uses: actions/checkout@master
+            - run: docker network create frontend
+            - run: docker compose up --detach
+            - run: docker compose exec --user root phpfpm composer install
+            - name: Normalize composer
+              # https://github.com/ergebnis/composer-normalize?tab=readme-ov-file#continuous-integration
+              run: docker compose run --rm phpfpm composer normalize --dry-run
 
     coding-standards-check_php-cs-fixer:
         name: coding-standards-check/php-cs-fixer

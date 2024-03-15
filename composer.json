@@ -1,10 +1,8 @@
 {
     "name": "itk-dev/it-kalender",
     "description": "It Kalender",
-    "type": "project",
     "license": "proprietary",
-    "minimum-stability": "stable",
-    "prefer-stable": true,
+    "type": "project",
     "require": {
         "php": ">=8.3",
         "ext-ctype": "*",
@@ -13,40 +11,38 @@
         "easycorp/easyadmin-bundle": "^4.7",
         "johngrogg/ics-parser": "^3.2.1",
         "stof/doctrine-extensions-bundle": "^1.8",
-        "symfony/console": "6.3.*",
-        "symfony/dotenv": "6.3.*",
+        "symfony/console": "~6.3.0",
+        "symfony/dotenv": "~6.3.0",
         "symfony/flex": "^2.3.3",
-        "symfony/framework-bundle": "6.3.*",
-        "symfony/http-client": "6.3.*",
-        "symfony/options-resolver": "6.3.*",
-        "symfony/runtime": "6.3.*",
-        "symfony/translation": "6.3.*",
-        "symfony/twig-bundle": "6.3.*",
-        "symfony/uid": "6.3.*",
-        "symfony/validator": "6.3.*",
+        "symfony/framework-bundle": "~6.3.0",
+        "symfony/http-client": "~6.3.0",
+        "symfony/options-resolver": "~6.3.0",
+        "symfony/runtime": "~6.3.0",
+        "symfony/translation": "~6.3.0",
+        "symfony/twig-bundle": "~6.3.0",
+        "symfony/uid": "~6.3.0",
+        "symfony/validator": "~6.3.0",
         "symfony/webpack-encore-bundle": "^2.0.1",
-        "symfony/yaml": "6.3.*",
+        "symfony/yaml": "~6.3.0",
         "twig/extra-bundle": "^3.7",
         "twig/intl-extra": "^3.7",
         "vich/uploader-bundle": "^2.2"
     },
-    "config": {
-        "allow-plugins": {
-            "php-http/discovery": true,
-            "symfony/flex": true,
-            "symfony/runtime": true
-        },
-        "sort-packages": true
-    },
-    "autoload": {
-        "psr-4": {
-            "App\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "App\\Tests\\": "tests/"
-        }
+    "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "ergebnis/composer-normalize": "^2.42",
+        "friendsofphp/php-cs-fixer": "^3.23",
+        "friendsoftwig/twigcs": "^6.2",
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^9.6.11",
+        "rector/rector": "^1.0",
+        "spatie/icalendar-generator": "^2.5.6",
+        "symfony/browser-kit": "~6.3.0",
+        "symfony/css-selector": "~6.3.0",
+        "symfony/maker-bundle": "^1.50",
+        "symfony/phpunit-bridge": "^6.3.2",
+        "symfony/stopwatch": "~6.3.0",
+        "symfony/web-profiler-bundle": "~6.3.0"
     },
     "replace": {
         "symfony/polyfill-ctype": "*",
@@ -57,56 +53,29 @@
         "symfony/polyfill-php80": "*",
         "symfony/polyfill-php81": "*"
     },
-    "scripts": {
-        "auto-scripts": {
-            "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
-        },
-        "post-install-cmd": [
-            "@auto-scripts"
-        ],
-        "post-update-cmd": [
-            "@auto-scripts"
-        ],
-         "coding-standards-check/php-cs-fixer": [
-            "php-cs-fixer fix --dry-run"
-        ],
-        "coding-standards-check/twigcs": [
-            "twigcs templates"
-        ],
-        "coding-standards-check": [
-            "@coding-standards-check/php-cs-fixer",
-            "@coding-standards-check/twigcs"
-        ],
-        "coding-standards-apply/php-cs-fixer": [
-            "php-cs-fixer fix"
-        ],
-        "coding-standards-apply": [
-            "@coding-standards-apply/php-cs-fixer"
-        ],
-        "fixtures:load": [
-            "bin/console doctrine:fixtures:load --no-interaction",
-            "bin/console app:read-ics"
-        ],
-        "update-translations": [
-            "# We need a translation from en to en (!) (without prefix) to be able to process placeholders in en.",
-            "DEFAULT_LOCALE=en bin/console translation:extract --clean --force en --prefix=''",
-            "DEFAULT_LOCALE=en bin/console translation:extract --clean --force da",
-            "# Mark default translations (prefixed with `__`) as “Needs work” in Danish translations",
-            "sed --in-place='' 's/<target>__/<target state=\"needs-l10n\">__/' translations/*.da.*xlf"
-        ],
-        "code-analysis/phpstan": [
-            "phpstan analyse"
-        ],
-        "code-analysis": [
-            "@code-analysis/phpstan"
-        ],
-        "rector": [
-            "rector"
-        ]
-    },
     "conflict": {
         "symfony/symfony": "*"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true,
+            "php-http/discovery": true,
+            "symfony/flex": true,
+            "symfony/runtime": true
+        },
+        "sort-packages": true
     },
     "extra": {
         "symfony": {
@@ -114,19 +83,52 @@
             "require": "6.3.*"
         }
     },
-    "require-dev": {
-        "doctrine/doctrine-fixtures-bundle": "^3.4",
-        "friendsofphp/php-cs-fixer": "^3.23",
-        "friendsoftwig/twigcs": "^6.2",
-        "phpstan/phpstan": "^1.10",
-        "phpunit/phpunit": "^9.6.11",
-        "rector/rector": "^1.0",
-        "spatie/icalendar-generator": "^2.5.6",
-        "symfony/browser-kit": "6.3.*",
-        "symfony/css-selector": "6.3.*",
-        "symfony/maker-bundle": "^1.50",
-        "symfony/phpunit-bridge": "^6.3.2",
-        "symfony/stopwatch": "6.3.*",
-        "symfony/web-profiler-bundle": "6.3.*"
+    "scripts": {
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ],
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        },
+        "code-analysis": [
+            "@code-analysis/phpstan"
+        ],
+        "code-analysis/phpstan": [
+            "phpstan analyse"
+        ],
+        "coding-standards-apply": [
+            "@coding-standards-apply/php-cs-fixer"
+        ],
+        "coding-standards-apply/php-cs-fixer": [
+            "php-cs-fixer fix"
+        ],
+        "coding-standards-check": [
+            "@coding-standards-check/php-cs-fixer",
+            "@coding-standards-check/twigcs"
+        ],
+        "coding-standards-check/php-cs-fixer": [
+            "php-cs-fixer fix --dry-run"
+        ],
+        "coding-standards-check/twigcs": [
+            "twigcs templates"
+        ],
+        "fixtures:load": [
+            "bin/console doctrine:fixtures:load --no-interaction",
+            "bin/console app:read-ics"
+        ],
+        "rector": [
+            "rector"
+        ],
+        "update-translations": [
+            "# We need a translation from en to en (!) (without prefix) to be able to process placeholders in en.",
+            "DEFAULT_LOCALE=en bin/console translation:extract --clean --force en --prefix=''",
+            "DEFAULT_LOCALE=en bin/console translation:extract --clean --force da",
+            "# Mark default translations (prefixed with `__`) as “Needs work” in Danish translations",
+            "sed --in-place='' 's/<target>__/<target state=\"needs-l10n\">__/' translations/*.da.*xlf"
+        ]
     }
 }
