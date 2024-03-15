@@ -14,7 +14,7 @@ class Event
     ) {
     }
 
-    public function __get(string $name)
+    public function __get(string $name): mixed
     {
         return $this->event->{$name};
     }

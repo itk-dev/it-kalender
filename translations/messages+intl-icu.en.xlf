@@ -109,6 +109,10 @@
         <source>Error reading ICS for {name}: {message}</source>
         <target>Error reading ICS for {name}: {message}</target>
       </trans-unit>
+      <trans-unit id="LRcgkGU" resname="ICS for {name} not changed since last read">
+        <source>ICS for {name} not changed since last read</source>
+        <target>ICS for {name} not changed since last read</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -12,7 +12,7 @@ use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: PersonRepository::class)]
-class Person
+class Person implements \Stringable
 {
     use TimestampableEntity;
 
@@ -34,6 +34,9 @@ class Person
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $icsReadAt = null;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Calendar>
+     */
     #[ORM\ManyToMany(targetEntity: Calendar::class, mappedBy: 'people')]
     private Collection $calendars;
 

@@ -69,6 +69,9 @@ class CalendarCrudController extends AbstractCrudController
             );
     }
 
+    /**
+     * @param Calendar $entityInstance
+     */
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
         parent::persistEntity($entityManager, $entityInstance);
@@ -77,6 +80,9 @@ class CalendarCrudController extends AbstractCrudController
         $this->addFlash('success', new TranslatableMessage('Calendar {name} created', ['name' => $entityInstance->getName()]));
     }
 
+    /**
+     * @param Calendar $entityInstance
+     */
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
         parent::persistEntity($entityManager, $entityInstance);

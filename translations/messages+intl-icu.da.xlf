@@ -109,6 +109,10 @@
         <source>Error reading ICS for {name}: {message}</source>
         <target state="translated">Fejl under læsning af ICS for {name}: {message}</target>
       </trans-unit>
+      <trans-unit id="LRcgkGU" resname="ICS for {name} not changed since last read">
+        <source>ICS for {name} not changed since last read</source>
+        <target state="translated">ICS for {name} ikke ændret siden sidst læst</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

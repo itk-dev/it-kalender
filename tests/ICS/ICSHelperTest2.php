@@ -4,7 +4,6 @@ namespace App\Tests\ICS;
 
 use App\ICS\BusyStatus;
 use App\ICS\ICSHelper;
-use Sabre\VObject;
 use Spatie\IcalendarGenerator\Components\Calendar;
 use Spatie\IcalendarGenerator\Components\Event;
 use Spatie\IcalendarGenerator\Properties\TextProperty;
@@ -18,20 +17,6 @@ class ICSHelperTest2 extends WebTestCase
     {
         self::bootKernel();
         $this->icsHelper = static::getContainer()->get(ICSHelper::class);
-    }
-
-    public function testHmm(): void
-    {
-        $ics = file_get_contents(__DIR__.'/ics/before-noon-repeating-2-away.ics');
-        /** @var VObject\Component\VCalendar $vcalendar */
-        $vcalendar = VObject\Reader::read($ics);
-        $vcalendar = $vcalendar->expand(new \DateTimeImmutable('2001-01-01'), new \DateTimeImmutable('2100-01-01'));
-        foreach ($vcalendar->VEVENT as $event) {
-            $this->assertEquals(0, 0);
-            foreach ($event->RRULE as $recur) {
-                //                $this->assertEquals(0, 0);
-            }
-        }
     }
 
     public function testBeforeNoonAway(): void
