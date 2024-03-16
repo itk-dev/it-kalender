@@ -67,3 +67,9 @@ docker compose run --rm node yarn coding-standards-check
 ```sh
 docker compose run --rm node yarn coding-standards-apply
 ```
+
+## Code analysis
+
+```sh
+docker compose exec phpfpm composer code-analysis
+```
