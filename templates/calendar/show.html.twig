@@ -45,17 +45,17 @@
             <div class="row bg-white">
                 <div class="col-4 col-md-3 bg-dark text-white border-bottom border-color-white px-3 pt-3">
                     <span class="text-primary small">{{ 'Week'|trans }}</span>
-                    <h2>{{ dates|first|format_datetime(pattern='ww') }}</h2>
+                    <h2>{{ dates|first|format_datetime(pattern = 'ww') }}</h2>
                 </div>
                 <div class="col">
-                    {{ dates|first|format_datetime(pattern='MMMM') }}
+                    {{ dates|first|format_datetime(pattern = 'MMMM') }}
 
                     <div class="row">
                         {% for date in dates %}
                             <div class="col border-bottom border-end p-3 d-md-block {{ loop.first ? 'bg-white' : 'bg-light' }} {{ loop.index <= 2 ? 'd-block' : 'd-none' }}">
                                 {# https://unicode-org.github.io/icu/userguide/format_parse/datetime/#datetime-format-syntax #}
-                                <h2 class="text-primary">{{ date|format_datetime(pattern='dd') }}</h2>
-                                {{ date|format_datetime(pattern='EEEE') }}
+                                <h2 class="text-primary">{{ date|format_datetime(pattern = 'dd') }}</h2>
+                                {{ date|format_datetime(pattern = 'EEEE') }}
                             </div>
                         {% endfor %}
                     </div>

@@ -32,7 +32,6 @@
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "ergebnis/composer-normalize": "^2.42",
         "friendsofphp/php-cs-fixer": "^3.23",
-        "friendsoftwig/twigcs": "^6.2",
         "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^9.6.11",
         "rector/rector": "^1.0",
@@ -42,7 +41,8 @@
         "symfony/maker-bundle": "^1.50",
         "symfony/phpunit-bridge": "^6.3.2",
         "symfony/stopwatch": "~6.3.0",
-        "symfony/web-profiler-bundle": "~6.3.0"
+        "symfony/web-profiler-bundle": "~6.3.0",
+        "vincentlanglet/twig-cs-fixer": "^2.6"
     },
     "replace": {
         "symfony/polyfill-ctype": "*",
@@ -101,20 +101,24 @@
             "phpstan analyse"
         ],
         "coding-standards-apply": [
-            "@coding-standards-apply/php-cs-fixer"
+            "@coding-standards-apply/php-cs-fixer",
+            "@coding-standards-apply/twig-cs-fixer"
         ],
         "coding-standards-apply/php-cs-fixer": [
             "php-cs-fixer fix"
         ],
+        "coding-standards-apply/twig-cs-fixer": [
+            "twig-cs-fixer lint --fix templates"
+        ],
         "coding-standards-check": [
             "@coding-standards-check/php-cs-fixer",
-            "@coding-standards-check/twigcs"
+            "@coding-standards-check/twig-cs-fixer"
         ],
         "coding-standards-check/php-cs-fixer": [
             "php-cs-fixer fix --dry-run"
         ],
-        "coding-standards-check/twigcs": [
-            "twigcs templates"
+        "coding-standards-check/twig-cs-fixer": [
+            "twig-cs-fixer lint templates"
         ],
         "fixtures:load": [
             "bin/console doctrine:fixtures:load --no-interaction",
