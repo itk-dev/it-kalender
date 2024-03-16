@@ -40,8 +40,8 @@ jobs:
             - name: coding-standards-check/php-cs-fixer
               run: docker compose exec --user root phpfpm composer coding-standards-check/php-cs-fixer
 
-    coding-standards-check_twigcs:
-        name: coding-standards-check/twigcs
+    coding-standards-check_twig-cs-fixer:
+        name: coding-standards-check/twig-cs-fixer
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
@@ -50,8 +50,8 @@ jobs:
             - run: docker network create frontend
             - run: docker compose up --detach
             - run: docker compose exec --user root phpfpm composer install
-            - name: coding-standards-check/twigcs
-              run: docker compose exec --user root phpfpm composer coding-standards-check/twigcs
+            - name: coding-standards-check/twig-cs-fixer
+              run: docker compose exec --user root phpfpm composer coding-standards-check/twig-cs-fixer
 
     coding-standards-check_markdownlint:
         name: coding-standards-check/markdownlint
